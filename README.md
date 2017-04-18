@@ -1,2 +1,2 @@
 # RoboGrab
-- Even more powerfulo than Donald Trumps saying: "Grab them by the ...."
+- Even more powerful than Donald Trumps  "Grab them by the ...."
