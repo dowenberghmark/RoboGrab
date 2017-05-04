@@ -15,8 +15,8 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 
-  if(argc != 3){
-    printf("%s\n", "Expected input:./client message portnr");
+  if(argc != 4){
+    printf("%s\n", "Expected input:./client message portnr ip");
     exit(EXIT_FAILURE);
   }
     
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
   int portNum = atoi(argv[2]); // NOTE that the port number is same for both client and server
   int buffer_size = 1024;
   char buffer[buffer_size];
-  char* ip = "127.0.0.1";
+  char* ip = argv[3];
 
   struct sockaddr_in server_addr;
 
