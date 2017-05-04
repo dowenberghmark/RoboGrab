@@ -21,13 +21,13 @@ int main(int argc, char *argv[])
   
   switch (argc) {
     case 2: {
-      port_nr = atoi(argv[2]);
-      address = argv[1];
+      port_nr = atoi(argv[1]);
+      //address = argv[1];
       server_init(port_nr);
       break;
     }
     default:
-      assert(argc != 3);
+      assert(argc != 2);
       printf("Wrong number of arguments, need port_nr , is %d \n", argc - 1);
       exit(EXIT_FAILURE);
       break;
