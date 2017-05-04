@@ -14,9 +14,15 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+
+  if(argc != 3){
+    printf("%s\n", "Expected input:./client message portnr");
+    exit(EXIT_FAILURE);
+  }
+    
   
   int client;
-  int portNum = 1500; // NOTE that the port number is same for both client and server
+  int portNum = atoi(argv[2]); // NOTE that the port number is same for both client and server
   int buffer_size = 1024;
   char buffer[buffer_size];
   char* ip = "127.0.0.1";
@@ -32,8 +38,7 @@ int main(int argc, char *argv[])
   }
 
  
-  printf("\n=> Socket client has been created...\n");
- 
+  
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(portNum);
   inet_pton(AF_INET, ip ,&server_addr.sin_addr);

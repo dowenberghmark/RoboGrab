@@ -20,15 +20,15 @@ int main(int argc, char *argv[])
 
   
   switch (argc) {
-    case 3: {
-      port_nr = atoi(argv[2]);
-      address = argv[1];
+    case 2: {
+      port_nr = atoi(argv[1]);
+      //address = argv[1];
       server_init(port_nr);
       break;
     }
     default:
-      assert(argc != 3);
-      printf("Wrong number of arguments, is %d \n", argc - 1);
+      assert(argc != 2);
+      printf("Wrong number of arguments, need port_nr , is %d \n", argc - 1);
       exit(EXIT_FAILURE);
       break;
   }
@@ -64,32 +64,35 @@ int server_init(int port_nr){
     printf("\nFailed to bind port: %d\n", fail);
     exit(EXIT_FAILURE);
   }
-
-  printf("%s\n","start listening" );
-  listen(client, 1);
-  printf("connected");
-
-  if( ((server = accept(client, addr_pointer, &size)) < 0 ))
-    printf("Error establishing connection to client\n");
- 
-  recv(server, buffer, buffer_size,0);
-
-  if (!strcmp(buffer, content)){
-    
-    sprintf(buffer, "ACCEPTED");
-    
-    send(server, buffer, buffer_size, 0);
-  }
-  else{
-
-    
-    sprintf(buffer, "REJECTED");
-    
-    send(server, buffer, buffer_size, 0);
-    
-  }
-
+  while(1){
+    printf("%s\n","start listening" );
+    listen(client, 1);
   
+    if( ((server = accept(client, addr_pointer, &size)) < 0 ))
+      printf("Error establishing connection to client\n");
+ 
+    printf("connected with a client waiting for message\n");
+
+    recv(server, buffer, buffer_size,0);
+    printf("Got a message %s\n", buffer);
+    if (!strcmp(buffer, content)){
+    
+      sprintf(buffer, "ACCEPTED");
+    
+      send(server, buffer, buffer_size, 0);
+    }
+    else{
+
+    
+      sprintf(buffer, "REJECTED");
+    
+      send(server, buffer, buffer_size, 0);
+    
+    }
+
+    printf("%s\n","Closed connection with client" );
+  }
   close(client);
+  
   return 0;
 }
