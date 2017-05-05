@@ -47,9 +47,15 @@ sensorRef.once('value')
         console.log(snap.ref.toString(), "\n\n");
         console.log(snap.val());
 
-    })
+    });
 
+sensorRef.on('child_changed',function(snap){
 
+        console.log(snap.key, "\n\n");
+        console.log(snap.ref.toString(), "\n\n");
+        console.log(snap.val());
+
+    });
 
 
 
