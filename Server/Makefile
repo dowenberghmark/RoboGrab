@@ -5,6 +5,7 @@
 CC=gcc
 PORT=1500
 SERVERIP=
+BFLAG=-lbluetooth
 all: server testingclient
 
 server: server.o
@@ -12,6 +13,9 @@ server: server.o
 
 testingclient: testingclient.o
 	$(CC) -o $@ $^
+
+bluetooth: bluetooth.o
+	$(CC) -o $@ $^ $(BFLAG)
 
 run_server: server
 	./server $(PORT)
