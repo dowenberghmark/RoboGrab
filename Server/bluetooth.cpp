@@ -5,6 +5,12 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
+#include <bluetooth/l2cap.h>
+#include <bluetooth/rfcomm.h>
+
+
+
+void client();
 
 int main(int argc, char **argv)
 {
@@ -35,7 +41,44 @@ int main(int argc, char **argv)
       strcpy(name, "[unknown]");
     printf("%s %s\n", addr, name);
   }
+  client();
   free( ii );
   close( sock );
   return 0;
 }
+
+
+
+void client()
+{
+  struct sockaddr_rc addr = { 0 };
+  int s, status;
+  char dest[18] = "30:14:12:12:13:29";
+  int buffer_size = 512;
+  char buffer[buffer_size];
+  // allocate a socket
+  s = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+  // set the connection parameters (who to connect to)
+  addr.rc_family = AF_BLUETOOTH;
+  addr.rc_channel = (uint8_t) 1;
+  str2ba( dest, &addr.rc_bdaddr );
+  // connect to server
+  status = connect(s, (struct sockaddr *)&addr, sizeof(addr));
+  // send a message
+  if( status == 0 ) {
+    status = write(s, "hello!", 6);
+  }
+  int counter = 0;
+  while(counter < 5){
+    recv(s, buffer,buffer_size,0);
+    printf("%s\n",buffer );
+    counter ++;
+    sleep(2);
+  }
+
+  
+  if( status < 0 ) perror("uh oh");
+  close(s);
+  
+}
+
