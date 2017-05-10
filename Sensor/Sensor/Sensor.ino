@@ -25,21 +25,25 @@ SoftwareSerial blueToothSerial(RxD,TxD);
 //Variables
 int chk;
 float hum;  //Stores humidity value
+float oldHum;
 float temp; //Stores temperature value
-char recvChar[4];
+float oldTemp;
+String recvChar;
 int counter;
+String sending_string;
+int tester;
 void setup()
 {
   Serial.begin(9600);
   dht.begin();
-
+  tester = 0;
  pinMode(RxD, INPUT); // Setup the Arduino to receive INPUT from the bluetooth shield on Digital Pin 6
  pinMode(TxD, OUTPUT); // Setup the Arduino to send data (OUTPUT) to the bluetooth shield on Digital Pin 7
  pinMode(13,OUTPUT); // Use onboard LED if required.
  //setupBlueToothConnection(); //Used to initialise the Bluetooth shield
  
- pinMode(Datapin, OUTPUT); // Setup the RGB LED Data Pin
- pinMode(Clkpin, OUTPUT); // Setup the RGB LED Clock pin
+ //pinMode(Datapin, OUTPUT); // Setup the RGB LED Data Pin
+ //pinMode(Clkpin, OUTPUT); // Setup the RGB LED Clock pin
 
 }
 
@@ -47,38 +51,38 @@ void loop()
 {
     //Read data and store it to variables hum and temp
     hum = dht.readHumidity();
-    temp= dht.readTemperature();
+    temp = dht.readTemperature();
     counter = Serial.available();
     //Print temp and humidity values to serial monitor
- /*   while( counter > 0){
-      if(counter > 4){
-        Serial.print("Too big message");
-        counter = 0;
-      }else{
-      recvChar[4-counter] = (char)Serial.read();
+    if( counter > 0){
       
+      recvChar = Serial.readStringUntil('!');
       
-      counter--;
+      //Serial.print("Command: ");
+      //Serial.println(recvChar);
+      
+      //}
+      
+      if (recvChar == "rt"){
+        Serial.print(String(temp) +"          "+ '\n');
+        //delay(200);
+        counter -= 3;
       }
-    
-    }*/
-    delay(2000); //Delay 2 sec.
- // if(recvChar == "read"){
-    Serial.print("Humidity: ");
-      Serial.print(hum);
-      Serial.print(" %, Temp: ");
-      Serial.print(temp);
-      Serial.println(" Celsius");
-      int i = 0;
-      /*while( i < 4 ){
-        recvChar[i] = 'p';
-        i++;
-      }*/
-    
- // }
-   //Serial.print(recvChar);
-    
-
+      if (recvChar == "rh"){
+        Serial.print(String(hum) + "          "+ '\n'); 
+      //  delay(200);
+        counter -=3;
+      }
+      
+    }
+   recvChar = ""; 
+  if (oldHum != hum || oldTemp != temp ){
+    sending_string = "t " + String(temp) + " h " + String(hum) + "\n";
+    //delay(200);
+    Serial.print(sending_string);
+    oldHum = hum;
+    oldTemp = temp;
+  }
 }
 
 
