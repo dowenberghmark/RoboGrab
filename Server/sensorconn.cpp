@@ -23,6 +23,8 @@ class Sensor{
   float get_humidity();
   void exit_loop();
  private:
+  float get_sensor_temp();
+  float get_sensor_humidity();
   
   void loop();
   float command(char * command);
@@ -58,8 +60,8 @@ Sensor::Sensor(char * bluetooth_mac){
   
   status = connect(sock, (struct sockaddr *)&addr, sizeof(addr));
 
-  this->get_temp();
-  this->get_humidity();
+  this->get_sensor_temp();
+  this->get_sensor_humidity();
   this->loop();
 }
 
@@ -73,8 +75,19 @@ void Sensor::exit_loop(){
   this->loop_control = false;
 }
 
+
+float Sensor::get_temp(){
+  return this->current_vals.temp;
+}
+    
+
+float Sensor::get_humidity(){
+  return this->current_vals.humidity;
+}
+
+
 float Sensor::command(char* command){
-  memset(buffer,0,buffer_size);
+  
   strcpy(buffer, command);
   send(this->sock,buffer, buffer_size, 0);
   //sleep(1);
@@ -83,13 +96,13 @@ float Sensor::command(char* command){
   return strtof(buffer, NULL);
 }
 
-float Sensor::get_temp(){
+float Sensor::get_sensor_temp(){
   char  tmp[] = "rt!";
   
   return (this->current_vals.temp = this->command(tmp));
 }
 
-float Sensor::get_humidity(){
+float Sensor::get_sensor_humidity(){
   char tmp[] =  "rh!";
   return (this->current_vals.humidity = this->command(tmp));
 }
@@ -117,7 +130,6 @@ void Sensor::loop(){
         printf("Temp: %f Humidity: %f \n", current_vals.temp, current_vals.humidity );
       }
       
-      memset(buffer, 0, buffer_size);
       
     }
   }
@@ -128,6 +140,8 @@ void Sensor::loop(){
   }
 
 }
+
+
 
 class BluetoothScanner
 {

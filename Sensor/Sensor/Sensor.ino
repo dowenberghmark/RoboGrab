@@ -17,8 +17,6 @@ DHT dht(DHTPIN, DHTTYPE); //// Initialize DHT sensor for normal 16mhz Arduino
 #define DEBUG_ENABLED 1
 
 
-int Clkpin = 9; //RGB LED Clock Pin (Digital 9)
-int Datapin = 8; //RGB LED Data Pin (Digital 8)
 
 SoftwareSerial blueToothSerial(RxD,TxD);
 
@@ -39,16 +37,23 @@ void setup()
   tester = 0;
  pinMode(RxD, INPUT); // Setup the Arduino to receive INPUT from the bluetooth shield on Digital Pin 6
  pinMode(TxD, OUTPUT); // Setup the Arduino to send data (OUTPUT) to the bluetooth shield on Digital Pin 7
- pinMode(13,OUTPUT); // Use onboard LED if required.
- //setupBlueToothConnection(); //Used to initialise the Bluetooth shield
- 
- //pinMode(Datapin, OUTPUT); // Setup the RGB LED Data Pin
- //pinMode(Clkpin, OUTPUT); // Setup the RGB LED Clock pin
-
+// pinMode(13,OUTPUT); // Use onboard LED if required.
+  blueToothSerial.begin(38400);
+  //blueToothSerial.write("AT+NAME=ARDTEAM2");
 }
 
 void loop()
 {
+
+    /*   // Keep reading from HC-05 and send to Arduino Serial Monitor
+  if (blueToothSerial.available())
+    Serial.write(blueToothSerial.read());
+
+  // Keep reading from Arduino Serial Monitor and send to HC-05
+  if (Serial.available()){
+    blueToothSerial.write(Serial.read());
+    Serial.print("yay");
+  }*/
     //Read data and store it to variables hum and temp
     hum = dht.readHumidity();
     temp = dht.readTemperature();
