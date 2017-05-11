@@ -17,6 +17,8 @@ testingclient: testingclient.o
 
 sensorconn: sensorconn.o
 	$(CC) $(FLAG) -o $@ $^ $(BFLAG) 
+sensorconn.o:
+	$(CC)  $(FLAG)-c -o sensorconn.o sensorconn.cpp
 
 run_server: server
 	./server $(PORT)
