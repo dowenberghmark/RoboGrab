@@ -71,7 +71,7 @@ Sensor::Sensor(char * bluetooth_mac){
   
   this->current_vals.humidity = this->get_sensor_humidity();
   
-  this->loop();
+  //this->loop();
 }
 
 Sensor::~Sensor(void){
@@ -210,10 +210,15 @@ int main(int argc, char **argv)
   }
   if (argc > 0) {
     char * mac = (char*)malloc(19);
-    //strcpy(mac, "30:14:12:12:13:29"); 
-    //Sensor sensor(mac);
+    strcpy(mac, "30:14:12:12:13:29"); 
+    Sensor sensor(mac);
     strcpy(mac, "20:14:12:12:03:32"); 
     Sensor sensor2(mac);
+
+    for (int i = 0; i < 5; i++) {
+      printf("Sensor 1 Temp: %f  Sensor 2 Temp: %f", sensor.get_temp(), sensor2.get_temp());
+      
+    }
    
     free(mac);
   }
