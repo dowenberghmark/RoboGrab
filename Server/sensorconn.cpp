@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci.h>
 #include <bluetooth/hci_lib.h>
@@ -61,7 +62,9 @@ Sensor::Sensor(char * bluetooth_mac){
   loop_control = true;
   
   if ((status = connect(sock, (struct sockaddr *)&addr, sizeof(addr))) < 0){
-    printf("cennect failure code:%d\n", status );
+    printf("connect failure code:%d\n", status );
+    perror("Error");
+    exit(EXIT_FAILURE);
   }
   
   this->current_vals.temp = this->get_sensor_temp();
