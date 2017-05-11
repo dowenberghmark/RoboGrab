@@ -210,8 +210,11 @@ int main(int argc, char **argv)
   }
   if (argc > 0) {
     char * mac = (char*)malloc(19);
-    strcpy(mac, "30:14:12:12:13:29"); 
-    Sensor sensor(mac);
+    //strcpy(mac, "30:14:12:12:13:29"); 
+    //Sensor sensor(mac);
+    strcpy(mac, "20:14:12:12:03:32"); 
+    Sensor sensor2(mac);
+   
     free(mac);
   }
   
