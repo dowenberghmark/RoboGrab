@@ -2,11 +2,11 @@
 # Makefile for server and testing client.
 #
 #
-CC=gcc
+CC=g++
 PORT=1500
 SERVERIP=
 BFLAG=-lbluetooth
-all: server testingclient
+all: server testingclient sensorconn
 
 server: server.o
 	$(CC) -o $@ $^  
@@ -14,7 +14,7 @@ server: server.o
 testingclient: testingclient.o
 	$(CC) -o $@ $^
 
-bluetooth: bluetooth.o
+sensorconn: sensorconn.o
 	$(CC) -o $@ $^ $(BFLAG)
 
 run_server: server
@@ -28,4 +28,4 @@ run_client_correct: testingclient
 	./testingclient CONNECT $(PORT) $(SERVERIP)
 
 clean:
-	rm -f server testingclient *.o
+	rm -f server testingclient sensorconn *.o
