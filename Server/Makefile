@@ -5,6 +5,7 @@
 CC=g++
 PORT=1500
 SERVERIP=
+FLAG=-std=c++11
 BFLAG=-lbluetooth
 all: server testingclient sensorconn
 
@@ -15,7 +16,7 @@ testingclient: testingclient.o
 	$(CC) -o $@ $^
 
 sensorconn: sensorconn.o
-	$(CC) -o $@ $^ $(BFLAG)
+	$(CC) -o $@ $^ $(BFLAG) $(FLAG)
 
 run_server: server
 	./server $(PORT)

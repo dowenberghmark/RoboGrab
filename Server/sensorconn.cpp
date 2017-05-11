@@ -59,9 +59,10 @@ Sensor::Sensor(char * bluetooth_mac){
   loop_control = true;
   
   status = connect(sock, (struct sockaddr *)&addr, sizeof(addr));
-
+  printf("%s\n", "Getting stuck with temp" );
   this->get_sensor_temp();
   this->get_sensor_humidity();
+  
   this->loop();
 }
 
