@@ -49,8 +49,8 @@ Sensor::Sensor(char * bluetooth_mac){
   strncpy(sensor_mac, bluetooth_mac, 18);
 
   // allocate a socket
-  if ((sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM))){
-    printf("Socket failure code: %d", sock);
+  if ((sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)) < 0){
+    printf("Socket failure code: %d\n", sock);
     exit(EXIT_FAILURE);
   }
   // set the connection parameters (who to connect to)
@@ -60,7 +60,9 @@ Sensor::Sensor(char * bluetooth_mac){
 
   loop_control = true;
   
-  status = connect(sock, (struct sockaddr *)&addr, sizeof(addr));
+  if ((status = connect(sock, (struct sockaddr *)&addr, sizeof(addr))) < 0){
+    printf("cennect failure code:%d\n", status );
+  }
   
   this->current_vals.temp = this->get_sensor_temp();
   printf("Getting stuck with temp: %f\n", this->current_vals.temp);
