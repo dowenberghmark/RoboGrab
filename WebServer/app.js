@@ -1,37 +1,19 @@
 // index.js - Runestone Team 2
-
-require('./app/index')
-const express = require('express')
-const app = express()
- var public_path = require('path')
+const express = require('express');
+const app = express();
+var public_path = require('path');
 var router = express.Router();
 var path = __dirname + '/views/';
-const port = 3000
+const port = 3000;
 
-router.use(function (req,res,next) {
-  console.log("/" + req.method);
-  next();
-});
-
-router.get("/",function(req,res){
-  res.sendFile(path + "index.html");
-});
-
-router.get("/inventory",function(req,res){
-  res.sendFile(path + "inventory.html");
-});
-
-router.get("/settings",function(req,res){
-  res.sendFile(path + "settings.html");
-});
+//Set up the view engine: pug, pug is a HTML-interpreter
+app.set('views', __dirname + '/views/');
+app.set('view engine', 'pug');
+app.locals.pretty = true;
 
 app.use(express.static(public_path.join(__dirname, 'public')));
 
 app.use("/",router);
-
-app.use("*",function(req,res){
-  res.sendFile(path + "404.html");
-});
 
 //Error message handling: should be last middleware
 app.use((err, request, response, next) => {
@@ -39,6 +21,13 @@ app.use((err, request, response, next) => {
   console.log(err)
   response.status(500).send('Something broke!')
 })
+
+//Set the path to the public directory
+app.use('/static', express.static(__dirname + '/public'));
+app.use('/sys', express.static(__dirname + '/app'));
+
+// Get routes for web access
+require(__dirname + '/app/routes')(app);
 
 app.listen(port, (err) => {
   if (err) {

@@ -1,0 +1,14 @@
+block content
+  .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+    | testing the firebase connection:
+    #sensors
+      button#sensorButton show sensors
+      p
+        ol#sensorlist
+      h2 Sensor 1
+      p value: {{sensor1.sunlight}}
+      | value: {{sensor1.temp}}
+
+      h2 Sensor 2
+      p value: {{sensor2.sunlight}}
+      | value: {{sensor2.temp}}

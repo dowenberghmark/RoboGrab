@@ -4,8 +4,12 @@
   "description": "The webserver for the robograb (group 2) system",
   "main": "index.js",
   "dependencies": {
-    "express": "latest",
-    "firebase": "^3.9.0"
+    "angular": "1.6.4",
+    "angular-route": "1.6.4",
+    "angularfire": "^2.3.0",
+    "express": "^4.15.2",
+    "firebase": "^3.9.0",
+    "pug": "2.0.0-rc.1"
   },
   "devDependencies": {},
   "scripts": {
