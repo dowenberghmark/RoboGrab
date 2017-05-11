@@ -68,9 +68,9 @@ Sensor::Sensor(char * bluetooth_mac){
   }
   
   this->current_vals.temp = this->get_sensor_temp();
-  printf("Getting stuck with temp: %f\n", this->current_vals.temp);
+  
   this->current_vals.humidity = this->get_sensor_humidity();
-  printf("Getting stuck with temp: %f\n", this->current_vals.humidity);
+  
   this->loop();
 }
 
@@ -125,10 +125,10 @@ void Sensor::loop(){
     float tmpTemp = 0;
     float tmpHum = 0;
     while(this->loop_control){
-      printf("%s\n", "In loop" );
+      //printf("%s\n", "In loop" );
       recv(sock, buffer,buffer_size,MSG_WAITALL);
       sscanf(buffer, "%s %f %s %f", received, &tmpTemp, received1, &tmpHum);
-      printf("After recv data, with buffer: %s\n", buffer);
+      //      printf("After recv data, with buffer: %s\n", buffer);
       if (tmpTemp != this->current_vals.temp) {
         this->current_vals.temp = tmpTemp;
         printf("Temp: %f Humidity: %f \n", current_vals.temp, current_vals.humidity );
