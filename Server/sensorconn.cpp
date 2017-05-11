@@ -212,7 +212,7 @@ int main(int argc, char **argv)
      char * mac = (char*)malloc(19);
      //strcpy(mac, "30:14:12:12:13:29"); 
      //Sensor sensor(mac);
-    strcpy(mac, "66-EE-CE-78-D3-36");//second"not this20:17:01:06:17:62");// fisrt cant"20:14:12:12:03:32");//third30:14:11:21:06:63 
+    strcpy(mac, "63-BB-96-90-F3-FD");//second"not this20:17:01:06:17:62");// fisrt cant"20:14:12:12:03:32");//third30:14:11:21:06:63 
     Sensor sensor2(mac);
 
     for (int i = 0; i < 5; i++) {
