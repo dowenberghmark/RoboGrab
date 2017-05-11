@@ -209,14 +209,14 @@ int main(int argc, char **argv)
     BluetoothScanner ss;
   }
   if (argc > 0) {
-    char * mac = (char*)malloc(19);
-    strcpy(mac, "30:14:12:12:13:29"); 
-    Sensor sensor(mac);
+     char * mac = (char*)malloc(19);
+     //strcpy(mac, "30:14:12:12:13:29"); 
+     //Sensor sensor(mac);
     strcpy(mac, "20:14:12:12:03:32");//second"20:17:01:06:17:62");// fisrt"20:14:12:12:03:32");//third30:14:11:21:06:63 
     Sensor sensor2(mac);
 
     for (int i = 0; i < 5; i++) {
-      printf("Sensor 1 Temp: %f\n", sensor.get_temp());
+      //printf("Sensor 1 Temp: %f\n", sensor.get_temp());
       printf(" Sensor 2 Temp: %f\n",  sensor2.get_temp());
     }
    
