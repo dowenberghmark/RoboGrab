@@ -67,10 +67,10 @@ Sensor::Sensor(char * bluetooth_mac){
     exit(EXIT_FAILURE);
   }
   
-  this->current_vals.temp = this->get_sensor_temp();
+  //this->current_vals.temp = this->get_sensor_temp();
   
-  this->current_vals.humidity = this->get_sensor_humidity();
-  
+  //this->current_vals.humidity = this->get_sensor_humidity();
+  printf("%s\n","Finished init connection" );
   //this->loop();
 }
 
