@@ -16,7 +16,7 @@ testingclient: testingclient.o
 	$(CC) -o $@ $^
 
 sensorconn: sensorconn.o
-	$(CC) -o $@ $^ $(BFLAG) $(FLAG)
+	$(CC) $(FLAG) -o $@ $^ $(BFLAG) 
 
 run_server: server
 	./server $(PORT)
