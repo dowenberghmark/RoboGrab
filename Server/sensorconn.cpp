@@ -49,8 +49,9 @@ Sensor::Sensor(char * bluetooth_mac){
   strncpy(sensor_mac, bluetooth_mac, 18);
 
   // allocate a socket
-  sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
-
+  if ((sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)))
+    exit(EXIT_FAILURE);
+  
   // set the connection parameters (who to connect to)
   addr.rc_family = AF_BLUETOOTH;
   addr.rc_channel = (uint8_t) 1;
@@ -59,10 +60,11 @@ Sensor::Sensor(char * bluetooth_mac){
   loop_control = true;
   
   status = connect(sock, (struct sockaddr *)&addr, sizeof(addr));
-  printf("%s\n", "Getting stuck with temp" );
-  this->get_sensor_temp();
-  this->get_sensor_humidity();
   
+  this->current_vals.temp = this->get_sensor_temp();
+  printf("Getting stuck with temp: %f\n", this->current_vals.temp);
+  this->current_vals.humidity = this->get_sensor_humidity();
+  printf("Getting stuck with temp: %f\n", this->current_vals.humidity);
   this->loop();
 }
 

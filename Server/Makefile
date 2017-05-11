@@ -5,7 +5,7 @@
 CC=g++
 PORT=1500
 SERVERIP=
-FLAG=-std=c++11
+FLAG=-std=gnu++11
 BFLAG=-lbluetooth
 all: server testingclient sensorconn
 
