@@ -86,12 +86,12 @@ void Sensor::exit_loop(){
 
 
 float Sensor::get_temp(){
-  return this->current_vals.temp;
+  return this->get_sensor_temp();
 }
     
 
 float Sensor::get_humidity(){
-  return this->current_vals.humidity;
+  return this->get_sensor_humidity();
 }
 
 
