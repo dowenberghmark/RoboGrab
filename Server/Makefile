@@ -13,12 +13,12 @@ server: server.o
 	$(CC) -o $@ $^  
 
 testingclient: testingclient.o
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ 
 
 sensorconn: sensorconn.o
 	$(CC) $(FLAG) -o $@ $^ $(BFLAG) 
 sensorconn.o:
-	$(CC)  $(FLAG)-c -o sensorconn.o sensorconn.cpp
+	$(CC)  $(FLAG) -c -o sensorconn.o sensorconn.cpp
 
 run_server: server
 	./server $(PORT)
