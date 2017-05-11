@@ -49,9 +49,10 @@ Sensor::Sensor(char * bluetooth_mac){
   strncpy(sensor_mac, bluetooth_mac, 18);
 
   // allocate a socket
-  if ((sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)))
+  if ((sock = socket(AF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM))){
+    printf("Socket failure code: %d", sock);
     exit(EXIT_FAILURE);
-  
+  }
   // set the connection parameters (who to connect to)
   addr.rc_family = AF_BLUETOOTH;
   addr.rc_channel = (uint8_t) 1;
