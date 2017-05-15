@@ -6,7 +6,7 @@ CC=g++
 PORT=1500
 SERVERIP=
 BFLAG=-lbluetooth
-all: server testingclient sensorconn
+all: server testingclient sensorconn map
 
 server: server.o
 	$(CC) -o $@ $^  
@@ -20,6 +20,9 @@ sensorconn: sensorconn.o
 run_server: server
 	./server $(PORT)
 
+map: map.o
+	$(CC) -o $@ $^
+
 run_client_wrong: testingclient
 	./testingclient connect $(PORT) $(SERVERIP)
 
@@ -28,4 +31,6 @@ run_client_correct: testingclient
 	./testingclient CONNECT $(PORT) $(SERVERIP)
 
 clean:
-	rm -f server testingclient sensorconn *.o
+	rm -f map  server testingclient sensorconn *.o
+
+.PHONY: clean
