@@ -4,3 +4,7 @@
 DatabaseHandler::DatabaseHandler() {
 
 }
+
+DatabaseHandler::~DatabaseHandler() {
+  
+}
