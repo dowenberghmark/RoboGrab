@@ -9,10 +9,12 @@ SERVERIP=
 ifeq ($(UNAME), Darwin)
 MONGODB= -I/usr/local/Cellar/include/bsoncxx/v_noabi -I/usr/local/Cellar/include/mongocxx/v_noabi 
 MLIB = -L/usr/local/Cellar/lib -lmongocxx -lbsoncxx
-else
-MONGODB=
-endif
 LDFLAGS=-Wl,-rpath,/usr/local/Cellar/lib
+else
+MONGODB=-I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi 
+MLIB = -L/usr/local/lib -lmongocxx -lbsoncxx
+LDFLAGS=-Wl,-rpath,/usr/local/lib
+endif
 
 all: server
 
