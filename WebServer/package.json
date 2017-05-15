@@ -9,6 +9,8 @@
     "angularfire": "^2.3.0",
     "express": "^4.15.2",
     "firebase": "^3.9.0",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.9",
     "pug": "2.0.0-rc.1"
   },
   "devDependencies": {},
