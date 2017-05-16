@@ -3,5 +3,5 @@
  */
 (function() {
   'use strict';
-  var app = angular.module('webtool', ['ngRoute','firebase']);
+  var app = angular.module('webtool', ['ngRoute','livebase']);
 })();
