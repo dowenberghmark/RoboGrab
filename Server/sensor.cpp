@@ -7,39 +7,7 @@
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
 #include <string.h>
-
-struct sensor_data
-{
-  float temp, humidity;
-};
-
-class Sensor{
-
- public:
-  //void connect();
-  Sensor(char * bluetooth_mac);
-  ~Sensor(void);
-  float get_temp();
-  float get_humidity();
-  void exit_loop();
- private:
-  float get_sensor_temp();
-  float get_sensor_humidity();
-  
-  void loop();
-  float command(char * command);
-  struct sensor_data current_vals;
-  
-  struct sockaddr_rc addr;
-  char sensor_mac[18];// = "30:14:12:12:13:29";
-  const int buffer_size = 16;
-  char *buffer;
-  int sock, status;
-  bool loop_control;
-  
-  
-  
-};
+#include "sensor.h"
 
 //Constructor
 Sensor::Sensor(char * bluetooth_mac){
@@ -143,61 +111,12 @@ void Sensor::loop(){
 
 
 
-class BluetoothScanner
-{
- public:
-  BluetoothScanner(void);
-  virtual ~BluetoothScanner(void);
- private:
-  void scan();
-  inquiry_info *ii = NULL;
-  int max_rsp, num_rsp;
-  int dev_id, sock, len, flags;
-  int i;
-  char addr[19] = { 0 };
-  char name[248] = { 0 };
-  
-  
-};
-BluetoothScanner::BluetoothScanner(void){
-  dev_id = hci_get_route(NULL);
-  sock = hci_open_dev( dev_id );
-
-  if (dev_id < 0 || sock < 0) {
-    perror("opening socket");
-    exit(1);
-  }
-  len = 8;
-  max_rsp = 255;
-  flags = IREQ_CACHE_FLUSH;
-  this->scan();
-}
-BluetoothScanner::~BluetoothScanner(void){
-  free( ii );
-  close(sock);
-}
-
-void BluetoothScanner::scan(){
-  ii = (inquiry_info*)malloc(max_rsp * sizeof(inquiry_info));
-  num_rsp = hci_inquiry(dev_id, len, max_rsp, NULL, &ii, flags);
-  if( num_rsp < 0 ) perror("hci_inquiry");
-  for (i = 0; i < num_rsp; i++) {
-    ba2str(&(ii+i)->bdaddr, addr);
-    memset(name, 0, sizeof(name));
-    if (hci_read_remote_name(sock, &(ii+i)->bdaddr, sizeof(name),
-                             name, 0) < 0)
-      strcpy(name, "[unknown]");
-    printf("%s %s\n", addr, name);
-  }
- 
-}
-
 int main(int argc, char **argv)
 {
 
   // TODO: Clean up with a nicer commands
   if (argc > 1){
-    BluetoothScanner ss;
+
   }
   if (argc > 0) {
     char * mac = (char*)malloc(19);
