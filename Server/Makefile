@@ -4,8 +4,8 @@
 #
 CC=g++
 FLAG=-std=c++11
-PORT=1500
-SERVERIP=
+PORT=5000
+SERVERIP="130.238.152.70"
 BFLAG=-lbluetooth
 all: server testingclient sensor map
 
@@ -28,6 +28,8 @@ run_server: server
 
 map: map.o
 	$(CC) -o $@ $^ $(FLAG)
+map.o:
+	$(CC) -c -o $@ map.cpp $(FLAG)
 
 run_client_wrong: testingclient
 	./testingclient connect $(PORT) $(SERVERIP)
