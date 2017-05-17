@@ -1,9 +1,9 @@
 // index.js - Runestone Team 2
 const express = require('express');
 const app = express();
+var mongo = require("mongodb");
 var public_path = require('path');
 var router = express.Router();
-var path = __dirname + '/views/';
 const port = 3000;
 
 //Set up the view engine: pug, pug is a HTML-interpreter
@@ -11,9 +11,20 @@ app.set('views', __dirname + '/views/');
 app.set('view engine', 'pug');
 app.locals.pretty = true;
 
+//Set the static path (static path is used in Angular app)
 app.use(express.static(public_path.join(__dirname, 'public')));
 
+//For non-angular routing (normal GET/POST etc.)
 app.use("/",router);
+
+app.use(function(request, response, next) {
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+//include MongoDB-script
+require(__dirname + '/app/mongoHandler')(app,mongo);
 
 //Error message handling: should be last middleware
 app.use((err, request, response, next) => {

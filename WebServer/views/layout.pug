@@ -23,17 +23,19 @@ html(ng-app='webtool')
   body
     block content
 
+  //Loading jquery
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
   script.
     window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\\/script>')
-  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
   script(src='/static/ext/angular/angular.min.js')
   script(src='/static/ext/angular-route/angular-route.min.js')
-  script(src='https://www.gstatic.com/firebasejs/3.6.6/firebase.js')
-  script(src='https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js')
+  script(src='/static/ext/socket_io/socket.io.js')
+  script(src='/static/js/livebase.js')
+  script(src='/static/js/livebase-angular.js')
+  //Load scripts for angular app and ng-routing
   script(src='/static/js/app.js')
   script(src='/static/js/routing.js')
-  script(src='/static/js/firebase_connect.js')
+  //Loading the controllers for the sub-pages
   script(src='/static/js/controllers/overview_controller.js')
   script(src='/static/js/controllers/navigation_controller.js')
   script(src='/static/js/controllers/test_controller.js')
