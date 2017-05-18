@@ -1,0 +1,10 @@
+{
+  "Sensor_1": {
+    "ID": "0",
+    "Temperatur": "20",
+    "Coordinates": {
+      "x": "4",
+      "y": "7"
+    }
+  }
+}
