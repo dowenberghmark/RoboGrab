@@ -8,33 +8,6 @@
 
 using namespace std;
 
-
-int main(int argc, char *argv[])
-{
-  int size1 = 6, size2 = 7;
-  Map a = Map(size1,size2);
-  Node * printer = a.root;
- 
-  //a.traverse_map();
-  // inverse function makes it look like the layout in design documents
-  a.traverse_map_inverse();
-  printf("%s\n", "");
-  printer = a.get_node(0,5);
-  //  printer->print_coordinate();
-  for (int i = 0; i < size1; i++) {
-  
-    for (int k=0; k < size2; k++) {
-      printer = a.get_node(i,k);
-      printer->print_coordinate();
-      printf("up: %d down: %d left: %d right: %d\n", printer->up_connected(),printer->down_connected(), printer->left_connected(), printer->right_connected());
-    }
-  }
-  printf("%s\n","" );
-
-  
-  return 0;
-}
-
 Node::Node(int x0, int y0, Node * l = NULL, Node * r = NULL, Node* f = NULL, Node * b = NULL){
   left = l;
   right = r;
@@ -57,7 +30,7 @@ Crossroad::Crossroad(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Nod
 
 void Crossroad::print_node_name (){
   std::cout << ( "Crossroad");
- 
+
 }
 bool Crossroad::up_connected(){
   return (this->up != NULL);
@@ -79,7 +52,7 @@ Shelf::Shelf(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0
 
 void Shelf::print_node_name(){
   printf("Shelf");
-  
+
 }
 
 Shelf::~Shelf(){}
@@ -106,20 +79,20 @@ bool Shelf::right_connected(){
 Map::Map(int x0, int y0){
   size_x = x0;
   size_y = y0;
-  
+
   root = NULL;
-  Node *previous_row, * up_row, *previous_pos; 
-  
+  Node *previous_row, * up_row, *previous_pos;
+
   for (int i = 0; i < size_y; i++) {
-    
+
     for (int j = 0; j < size_x; j++) {
-      if ( i % 1 == 0 ){ 
+      if ( i % 1 == 0 ){
         Node *tmp ;
         //special case for root
         if (j ==0 && i == 0) {
           tmp = new Crossroad(j, i,NULL,NULL,NULL,NULL );
           root = tmp;
- 
+
           up_row = root;
           previous_row = root;
         }
@@ -134,48 +107,49 @@ Map::Map(int x0, int y0){
         else {
           if (i %3 == 0 || j == size_x-1){
             tmp = new Crossroad(j, i, previous_pos,NULL,NULL,NULL );
-            
+
           }
           else
             tmp = new Shelf(j,i, previous_pos,NULL,NULL,NULL);
           previous_pos->right = tmp;
           if (i > 0) {
-             previous_row = previous_row->right;  
+             previous_row = previous_row->right;
              tmp->down = previous_row;
              previous_row->up = tmp;
-            
+
           }
         }
-        
+
         previous_pos = tmp;
         opposite = tmp;
       }
     }
-    
+
 
   }
 }
 void Map::traverse_map(){
   int counter = 0;
   Node *conductor = root;
-  Node *row_up = root->up;  
+  Node *row_up = root->up;
   while (conductor !=NULL ) {
     conductor->print_node_name();
     conductor->print_coordinate();
-    
+
     conductor = conductor->right;
     if (conductor == NULL && row_up !=NULL){
       conductor = row_up;
       row_up = conductor->up;
       printf("\n");
     }
-    
+
   }
    printf("\n");
 }
 
 void Map::traverse_map_inverse(){
   int counter = 0;
+
   
   Node *conductor = opposite;
 
@@ -187,14 +161,14 @@ void Map::traverse_map_inverse(){
   while (conductor !=NULL ) {
     conductor->print_node_name();
     conductor->print_coordinate();
-    
+
     conductor = conductor->right;
     if (conductor == NULL && row_up !=NULL){
       conductor = row_up;
       row_up = conductor->down;
       printf("\n");
     }
-    
+
   }
    printf("\n");
 }
@@ -221,7 +195,7 @@ void Map::traverse_map_vertical(int x, int y){
     for (int i = 0; i < x-1; i++) {
       conductor = conductor->right;
     }
-  
+
     conductor->print_coordinate();
   }
 }
@@ -234,7 +208,7 @@ void Map::traverse_map_inverse(int x, int y){
     for (int i = 0; i < x-1; i++) {
       conductor = conductor->left;
     }
-  
+
     conductor->print_coordinate();
   }
 }
@@ -256,17 +230,17 @@ Node * Map::get_node(int x,int y){
 
 
 Map::~Map(){
-  
+
   Node * tmp;
   Node *conductor = root;
   Node *row_up = root->up;
- 
+
   while (conductor !=NULL) {
     tmp = conductor->right;
     free(conductor);
     conductor = tmp;
     if (conductor == NULL && row_up !=NULL){
-      
+
       conductor = row_up;
       row_up = conductor->up;
     }

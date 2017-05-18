@@ -30,19 +30,19 @@ class Sensor{
  private:
   float get_sensor_temp();
   float get_sensor_humidity();
-  
+
   void loop();
   float command(char * command);
   struct sensor_data current_vals;
-  
+
   struct sockaddr_rc addr;
   char sensor_mac[18];// = "30:14:12:12:13:29";
   const int buffer_size = 16;
   char *buffer;
   int sock, status;
   bool loop_control;
-  
-  
-  
+
+
+
 };
 #endif // SENSOR_H

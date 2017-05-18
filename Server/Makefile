@@ -2,43 +2,31 @@
 # Makefile for server and testing client.
 #
 #
+UNAME_S := $(shell uname -s)
 CC=g++
-FLAG=-std=c++11
-PORT=5000
-SERVERIP="130.238.152.70"
-BFLAG=-lbluetooth
-all: server testingclient sensor map
+PORT=1500
+SERVERIP=
+ifeq ($(UNAME_S), Darwin)
+MONGODB= -I/usr/local/Cellar/include/bsoncxx/v_noabi -I/usr/local/Cellar/include/mongocxx/v_noabi
+MLIB = -L/usr/local/Cellar/lib -lmongocxx -lbsoncxx
+LDFLAGS=-Wl,-rpath,/usr/local/Cellar/lib
+OBJECTS := $(shell find . ! -name "sensor.*" -name "*.cpp" -maxdepth 1)
+else
+MONGODB=-I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi
+MLIB = -L/usr/local/lib -lmongocxx -lbsoncxx
+LDFLAGS=-Wl,-rpath,/usr/local/lib -lbluetooth
+OBJECTS := $(shell find . ! -name "mac_sensor.*" -name "*.cpp" -maxdepth 1)
+endif
 
-server: server.o
-	$(CC) -o $@ $^  $(FLAG)
+all: server
 
-testingclient: testingclient.o
-	$(CC) -o $@ $^ $(FLAG)
+server:
+	$(CC) -Wall -std=c++11 $(OBJECTS) -o $@ $^ $(LDFLAGS) $(MONGODB) $(MLIB)
 
-testingclient.o: 
-	$(CC) -c -o $@ testingclient.cpp $(FLAG)
+run:
 
-sensor: sensor.o
-	$(CC) -o $@ $^ $(BFLAG) $(FLAG)
-sensor.o:
-	$(CC) -c -o $@ sensor.cpp  $(FLAG)
-
-run_server: server
-	./server $(PORT) $(FLAG)
-
-map: map.o
-	$(CC) -o $@ $^ $(FLAG)
-map.o:
-	$(CC) -c -o $@ map.cpp $(FLAG)
-
-run_client_wrong: testingclient
-	./testingclient connect $(PORT) $(SERVERIP)
-
-
-run_client_correct: testingclient
-	./testingclient CONNECT $(PORT) $(SERVERIP)
+	./server
 
 clean:
-	rm -f map  server testingclient sensor *.o
-
-.PHONY: clean
+	rm -f *.o
+	rm server
