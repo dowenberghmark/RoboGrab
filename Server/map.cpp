@@ -5,7 +5,7 @@
 #include "map.h"
 #include <iostream>
 
-// TODO: Add exceptions / safeguards for traverse.
+
 using namespace std;
 
 
@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
   Node * printer = a.root;
  
   //a.traverse_map();
+  // inverse function makes it look like the layout in design documents
   a.traverse_map_inverse();
   printf("%s\n", "");
   a.traverse_map(2,2);
@@ -22,7 +23,7 @@ int main(int argc, char *argv[])
   a.traverse_map_inverse(2,5);
   a.traverse_map_inverse(3,3);
   printf("%s\n","" );
-// TODO: Fix print_nodename() works as supposed without the keyword virtual.
+
 
   return 0;
 }
