@@ -30,3 +30,4 @@ run:
 clean:
 	rm -f *.o
 	rm server
+.PHONY: clean all

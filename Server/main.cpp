@@ -16,7 +16,7 @@
 #include "sensor.h"
 #endif
 #include <string>
-
+#include "map.h"
  int main(int argc, char *argv[]) {
 
   if (argc == 1 || !strcmp(argv[1],"server")) {
@@ -27,7 +27,7 @@
   }
   if (argc == 1 || !strcmp(argv[1],"map")) {
     //Starting Map-test
-    int size1 =  3, size2 = 7;
+    int size1 =  10, size2 = 10;
     Map a = Map(size1,size2);
     Node * printer = a.root;
     //a.traverse_map();
@@ -39,14 +39,14 @@
     // a.traverse_map_inverse(2,5);
     // a.traverse_map_inverse(3,3);
     
-    for (int i = 0; i < size1; i++) {
+    // for (int i = 0; i < size1; i++) {
   
-      for (int k=0; k < size2; k++) {
-        printer = a.get_node(i,k);
-        printer->print_coordinate();
-        printf("up: %d down: %d left: %d right: %d\n", printer->up_connected(),printer->down_connected(), printer->left_connected(), printer->right_connected());
-      }
-    }
+    //   for (int k=0; k < size2; k++) {
+    //     printer = a.get_node(i,k);
+    //     printer->print_coordinate();
+    //     printf("up: %d down: %d left: %d right: %d\n", printer->up_connected(),printer->down_connected(), printer->left_connected(), printer->right_connected());
+    //   }
+    // }
   
 
     printf("%s\n","" );

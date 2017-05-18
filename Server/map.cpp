@@ -4,7 +4,7 @@
 #include <string.h>
 #include "map.h"
 #include <iostream>
-
+#include <typeinfo>
 
 using namespace std;
 
@@ -17,7 +17,7 @@ Node::Node(int x0, int y0, Node * l = NULL, Node * r = NULL, Node* f = NULL, Nod
   y = y0;
 }
 void Node::print_coordinate(){
-  printf("(%d, %d)\t",x,y);
+  printf("(%d, %d) ",x,y);
 }
 
 
@@ -39,10 +39,12 @@ bool Crossroad::down_connected(){
   return (this->down != NULL);
 }
 bool Crossroad::left_connected(){
-  return (this->left != NULL   );
+    Node* p = new Crossroad(1,1,NULL,NULL,NULL,NULL);
+  return (this->left != NULL && typeid(*p) == typeid(*(this->left))  );
 }
 bool Crossroad::right_connected(){
-  return (this->right != NULL);
+  Node* p = new Crossroad(1,1,NULL,NULL,NULL,NULL);
+  return (this->right != NULL && typeid(*p) == typeid(*(this->right)));
 }
 
 
@@ -129,7 +131,7 @@ Map::Map(int x0, int y0){
   }
 }
 void Map::traverse_map(){
-  int counter = 0;
+
   Node *conductor = root;
   Node *row_up = root->up;
   while (conductor !=NULL ) {
@@ -148,7 +150,7 @@ void Map::traverse_map(){
 }
 
 void Map::traverse_map_inverse(){
-  int counter = 0;
+
 
   
   Node *conductor = opposite;
