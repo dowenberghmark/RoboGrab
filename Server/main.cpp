@@ -1,6 +1,12 @@
 /*
   main.cpp
   Copyright 2017 Runestone Group 2
+
+  Use parameters to call ./server <PARAM>
+    no parameter : run all
+    map : runs the map test
+    server : runs the server
+    sensor : runs the sensor test
  */
 #include "robograb.h"
 #include "map.h"
