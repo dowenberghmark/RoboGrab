@@ -18,7 +18,7 @@ LDFLAGS=-Wl,-rpath,/usr/local/lib -lbluetooth
 OBJECTS := $(shell find . ! -name "mac_sensor.*" -name "*.cpp" -maxdepth 1)
 endif
 
-all: server
+all: clean server
 
 server:
 	$(CC) -Wall -std=c++11 $(OBJECTS) -o $@ $^ $(LDFLAGS) $(MONGODB) $(MLIB)
@@ -29,4 +29,4 @@ run:
 
 clean:
 	rm -f *.o
-	rm server
+	rm -f server

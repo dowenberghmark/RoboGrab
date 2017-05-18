@@ -8,12 +8,13 @@
     server : runs the server
     sensor : runs the sensor test
  */
-#include "robograb.h"
-#include "map.h"
+#include "robograb.hpp"
+#include "databaseHandler.hpp"
+#include "map.hpp"
 #ifdef __APPLE__
-#include "mac_sensor.h"
+#include "mac_sensor.hpp"
 #else
-  #include "sensor.h"
+  #include "sensor.hpp"
 #endif
 #include <string>
 
@@ -27,16 +28,18 @@
   }
   if (argc == 1 || !strcmp(argv[1],"map")) {
     //Starting Map-test
-    Map a = Map(3,7);
-    Node * printer = a.root;
+    Map *a = new Map(3,7);
+
+    DatabaseHandler *databaseHandler_ = new DatabaseHandler::DatabaseHandler();
+    databaseHandler_->createJSONfromMap(a);
     //a.traverse_map();
     // inverse function makes it look like the layout in design documents
-    a.traverse_map_inverse();
+    a->traverse_map_inverse();
     printf("%s\n", "");
-    a.traverse_map(2,2);
-    a.traverse_map_vertical(2,2);
-    a.traverse_map_inverse(2,5);
-    a.traverse_map_inverse(3,3);
+    a->traverse_map(2,2);
+    a->traverse_map_vertical(2,2);
+    a->traverse_map_inverse(2,5);
+    a->traverse_map_inverse(3,3);
     printf("%s\n","" );
   }
   else if (argc == 1 || !strcmp(argv[1],"sensor")) {

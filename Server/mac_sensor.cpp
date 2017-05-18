@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <string.h>
-#include "mac_sensor.h"
+#include "mac_sensor.hpp"
 
 //Constructor
 Sensor::Sensor(char * bluetooth_mac){

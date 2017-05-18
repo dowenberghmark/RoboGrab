@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "map.h"
+#include "map.hpp"
 #include <iostream>
 
 
@@ -23,13 +23,25 @@ void Node::print_coordinate(){
 
 Node::~Node(){}
 
+int Node::getX(){
+  return x;
+}
+
+int Node::getY(){
+  return y;
+}
+
 
 Crossroad::Crossroad(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0, l, r, f, b){}
 
 
-void Crossroad::print_node_name (){
+void Crossroad::print_node_name(){
   std::cout << ( "Crossroad");
 
+}
+
+std::string Crossroad::get_node_type() {
+  return "Crossroad";
 }
 
 Crossroad::~Crossroad(){}
@@ -39,6 +51,10 @@ Shelf::Shelf(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0
 void Shelf::print_node_name(){
   printf("Shelf");
 
+}
+
+std::string Shelf::get_node_type() {
+  return "Shelf";
 }
 
 Shelf::~Shelf(){}
@@ -96,8 +112,8 @@ Map::Map(int x0, int y0){
 
   }
 }
+
 void Map::traverse_map(){
-  int counter = 0;
   Node *conductor = root;
   Node *row_up = root->up;
   while (conductor !=NULL ) {
@@ -115,8 +131,24 @@ void Map::traverse_map(){
    printf("\n");
 }
 
+std::vector<Node::Node*> Map::getMapNodes(){
+  std::vector<Node::Node*> out_v;
+  Node *conductor = root;
+  Node *row_up = root->up;
+  while (conductor !=NULL ) {
+    out_v.push_back(conductor);
+
+    conductor = conductor->right;
+    if (conductor == NULL && row_up !=NULL){
+      conductor = row_up;
+      row_up = conductor->up;
+    }
+
+  }
+  return out_v;
+}
+
 void Map::traverse_map_inverse(){
-  int counter = 0;
   Node *conductor = opposite->left->left;
   Node *row_up = conductor->down;
   while (conductor !=NULL ) {

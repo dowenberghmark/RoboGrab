@@ -5,11 +5,24 @@
 #ifndef DATABASEHANDLER_H
 #define DATABASEHANDLER_H
 
-#include <bsoncxx/builder/stream/document.hpp>
+#include <cstdint>
+#include <iostream>
+#include <vector>
 #include <bsoncxx/json.hpp>
-
+#include <bsoncxx/builder/basic/array.hpp>
+#include <bsoncxx/builder/basic/document.hpp>
+#include <bsoncxx/builder/basic/kvp.hpp>
+#include <bsoncxx/types.hpp>
 #include <mongocxx/client.hpp>
+#include <mongocxx/stdx.hpp>
+#include <mongocxx/uri.hpp>
 #include <mongocxx/instance.hpp>
+
+using bsoncxx::builder::basic::sub_document;
+using bsoncxx::builder::basic::sub_array;
+using bsoncxx::builder::basic::kvp;
+
+#include "map.hpp"
 
 #include <iostream>
 
@@ -23,11 +36,6 @@ class DatabaseHandler{
       check if the firebase-server is reachable
     **/
     bool check_connection();
-
-    /**
-      wait asynchronous for new queue message/order from GUI
-    **/
-    void receiveGUIMessage();
 
     /**
       add/remove a robot to the list of robots
@@ -57,16 +65,12 @@ class DatabaseHandler{
     void updateRobotStatus();
 
     /**
-      send an error message to display
+        get Map from JSON-file
     **/
-    void sendErrorMessage();
+    void createJSONfromMap(Map *);
 
   private:
-
-    /**
-      initialize REST details
-    **/
-    void configure_REST();
+    mongocxx::client conn;
 
 };
 

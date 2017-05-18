@@ -7,7 +7,7 @@
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
 #include <string.h>
-#include "sensor.h"
+#include "sensor.hpp"
 
 //Constructor
 Sensor::Sensor(char * bluetooth_mac){
