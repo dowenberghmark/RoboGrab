@@ -4,7 +4,7 @@
 #include <string.h>
 #include "map.hpp"
 #include <iostream>
-
+#include <typeinfo>
 
 using namespace std;
 
@@ -17,8 +17,9 @@ Node::Node(int x0, int y0, Node * l = NULL, Node * r = NULL, Node* f = NULL, Nod
   y = y0;
 }
 void Node::print_coordinate(){
-  printf("(%d, %d)\t",x,y);
+  printf("(%d, %d) ",x,y);
 }
+
 
 
 Node::~Node(){}
@@ -39,6 +40,21 @@ void Crossroad::print_node_name(){
   std::cout << ( "Crossroad");
 
 }
+bool Crossroad::up_connected(){
+  return (this->up != NULL);
+}
+bool Crossroad::down_connected(){
+  return (this->down != NULL);
+}
+bool Crossroad::left_connected(){
+    Node* p = new Crossroad(1,1,NULL,NULL,NULL,NULL);
+  return (this->left != NULL && typeid(*p) == typeid(*(this->left))  );
+}
+bool Crossroad::right_connected(){
+  Node* p = new Crossroad(1,1,NULL,NULL,NULL,NULL);
+  return (this->right != NULL && typeid(*p) == typeid(*(this->right)));
+}
+
 
 std::string Crossroad::get_node_type() {
   return "Crossroad";
@@ -58,6 +74,24 @@ std::string Shelf::get_node_type() {
 }
 
 Shelf::~Shelf(){}
+
+
+bool Shelf::up_connected(){
+  return (this->y % 3 == 2);
+}
+bool Shelf::down_connected(){
+  return (this->y % 3 == 1);
+}
+bool Shelf::left_connected(){
+  return false;
+}
+bool Shelf::right_connected(){
+  return false;
+}
+
+
+
+
 
 
 Map::Map(int x0, int y0){
@@ -149,8 +183,14 @@ std::vector<Node::Node*> Map::getMapNodes(){
 }
 
 void Map::traverse_map_inverse(){
-  Node *conductor = opposite->left->left;
-  Node *row_up = conductor->down;
+
+  Node *conductor = opposite;
+
+  while (conductor->left != NULL)
+    conductor = conductor->left;
+
+
+  Node *row_up = conductor->down;  
   while (conductor !=NULL ) {
     conductor->print_node_name();
     conductor->print_coordinate();
@@ -205,6 +245,24 @@ void Map::traverse_map_inverse(int x, int y){
     conductor->print_coordinate();
   }
 }
+
+Node * Map::get_node(int x,int y){
+  Node * conductor = NULL;
+  if(x <= size_x && y <= size_y ){
+    conductor = root;
+    for (int j = 0; j < y; j++) {
+      conductor = conductor->up;
+    }
+    for (int i = 0; i < x; i++) {
+      conductor = conductor->right;
+    }
+  
+   
+  }
+    return conductor;
+}
+
+
 
 Map::~Map(){
 

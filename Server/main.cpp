@@ -14,10 +14,14 @@
 #ifdef __APPLE__
 #include "mac_sensor.hpp"
 #else
+<<<<<<< HEAD
   #include "sensor.hpp"
+=======
+#include "sensor.h"
+>>>>>>> 32c01a6c2bb357753881ed61537ccc97a87f42ad
 #endif
 #include <string>
-
+#include "map.h"
  int main(int argc, char *argv[]) {
 
   if (argc == 1 || !strcmp(argv[1],"server")) {
@@ -28,7 +32,9 @@
   }
   if (argc == 1 || !strcmp(argv[1],"map")) {
     //Starting Map-test
-    Map *a = new Map(3,7);
+    int size1 =  10, size2 = 10;
+    Map a = Map(size1,size2);
+    Node * printer = a.root;
 
     DatabaseHandler *databaseHandler_ = new DatabaseHandler::DatabaseHandler();
     databaseHandler_->createJSONfromMap(a);

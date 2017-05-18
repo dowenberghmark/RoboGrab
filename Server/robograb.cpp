@@ -2,8 +2,8 @@
   robograb.cpp
   Copyright 2017 Runestone Group 2
  */
-#include "robograb.hpp"
-
+#include "robograb.h"
+//#include <pthread.h>
 RoboGrab::RoboGrab() {
   databaseHandler_ = new DatabaseHandler();
 }
