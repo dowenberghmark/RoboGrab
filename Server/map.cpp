@@ -214,8 +214,9 @@ void Map::traverse_map_inverse(int x, int y){
 }
 
 Node * Map::get_node(int x,int y){
-   if(x <= size_x && y <= size_y ){
-    Node * conductor = root;
+  Node * conductor = NULL;
+  if(x <= size_x && y <= size_y ){
+    conductor = root;
     for (int j = 0; j < y; j++) {
       conductor = conductor->up;
     }
@@ -223,8 +224,9 @@ Node * Map::get_node(int x,int y){
       conductor = conductor->right;
     }
   
-    return conductor;
+   
   }
+    return conductor;
 }
 
 

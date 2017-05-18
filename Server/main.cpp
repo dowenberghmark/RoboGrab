@@ -13,7 +13,7 @@
 #ifdef __APPLE__
 #include "mac_sensor.h"
 #else
-  #include "sensor.h"
+#include "sensor.h"
 #endif
 #include <string>
 
@@ -27,16 +27,28 @@
   }
   if (argc == 1 || !strcmp(argv[1],"map")) {
     //Starting Map-test
-    Map a = Map(3,7);
+    int size1 =  3, size2 = 7;
+    Map a = Map(size1,size2);
     Node * printer = a.root;
     //a.traverse_map();
     // inverse function makes it look like the layout in design documents
     a.traverse_map_inverse();
     printf("%s\n", "");
-    a.traverse_map(2,2);
-    a.traverse_map_vertical(2,2);
-    a.traverse_map_inverse(2,5);
-    a.traverse_map_inverse(3,3);
+    // a.traverse_map(2,2);
+    // a.traverse_map_vertical(2,2);
+    // a.traverse_map_inverse(2,5);
+    // a.traverse_map_inverse(3,3);
+    
+    for (int i = 0; i < size1; i++) {
+  
+      for (int k=0; k < size2; k++) {
+        printer = a.get_node(i,k);
+        printer->print_coordinate();
+        printf("up: %d down: %d left: %d right: %d\n", printer->up_connected(),printer->down_connected(), printer->left_connected(), printer->right_connected());
+      }
+    }
+  
+
     printf("%s\n","" );
   }
   else if (argc == 1 || !strcmp(argv[1],"sensor")) {
