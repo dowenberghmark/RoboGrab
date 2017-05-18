@@ -3,24 +3,47 @@
   Copyright 2017 Runestone Group 2
  */
 #include "robograb.h"
+#include "map.h"
 #ifdef __APPLE__
 #include "mac_sensor.h"
 #else
   #include "sensor.h"
 #endif
+#include <string>
 
- int main() {
+ int main(int argc, char *argv[]) {
 
-   //Starting the roboGrab server
-   RoboGrab *robograb = new RoboGrab();
-   robograb->start(5000);
+  if (argc == 1 || !strcmp(argv[1],"server")) {
+     //Starting the roboGrab server
+     RoboGrab *robograb = new RoboGrab();
+     robograb->start(5000);
+     delete robograb;
+  }
+  if (argc == 1 || !strcmp(argv[1],"map")) {
+    //Starting Map-test
+    Map a = Map(3,7);
+    Node * printer = a.root;
+    //a.traverse_map();
+    // inverse function makes it look like the layout in design documents
+    a.traverse_map_inverse();
+    printf("%s\n", "");
+    a.traverse_map(2,2);
+    a.traverse_map_vertical(2,2);
+    a.traverse_map_inverse(2,5);
+    a.traverse_map_inverse(3,3);
+    printf("%s\n","" );
+  }
+  else if (argc == 1 || !strcmp(argv[1],"sensor")) {
+     //Starting the SensorHandler
+    char* mac = "30:14:12:12:13:29";
+     Sensor sensor(mac);
+     free(mac);
+  }
+  else {
+    printf("%s\n", "Please specifify a valid parameter");
+  }
 
-   //Starting the SensorHandler
-  char* mac = "30:14:12:12:13:29";
-   Sensor sensor(mac);
-   free(mac);
 
-   delete robograb;
+     return 0;
 
-   return 0;
- }
+}

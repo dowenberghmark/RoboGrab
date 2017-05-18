@@ -3,7 +3,7 @@
 #
 #
 UNAME_S := $(shell uname -s)
-CC=g++-4.9
+CC=g++
 PORT=1500
 SERVERIP=
 ifeq ($(UNAME_S), Darwin)
