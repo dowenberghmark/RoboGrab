@@ -11,20 +11,27 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-  Map a = Map(3,7);
+  int size1 = 6, size2 = 7;
+  Map a = Map(size1,size2);
   Node * printer = a.root;
  
   //a.traverse_map();
   // inverse function makes it look like the layout in design documents
   a.traverse_map_inverse();
   printf("%s\n", "");
-  a.traverse_map(2,2);
-  a.traverse_map_vertical(2,2);
-  a.traverse_map_inverse(2,5);
-  a.traverse_map_inverse(3,3);
+  printer = a.get_node(0,5);
+  //  printer->print_coordinate();
+  for (int i = 0; i < size1; i++) {
+  
+    for (int k=0; k < size2; k++) {
+      printer = a.get_node(i,k);
+      printer->print_coordinate();
+      printf("up: %d down: %d left: %d right: %d\n", printer->up_connected(),printer->down_connected(), printer->left_connected(), printer->right_connected());
+    }
+  }
   printf("%s\n","" );
 
-
+  
   return 0;
 }
 
@@ -41,6 +48,7 @@ void Node::print_coordinate(){
 }
 
 
+
 Node::~Node(){}
 
 
@@ -51,6 +59,19 @@ void Crossroad::print_node_name (){
   std::cout << ( "Crossroad");
  
 }
+bool Crossroad::up_connected(){
+  return (this->up != NULL);
+}
+bool Crossroad::down_connected(){
+  return (this->down != NULL);
+}
+bool Crossroad::left_connected(){
+  return (this->left != NULL   );
+}
+bool Crossroad::right_connected(){
+  return (this->right != NULL);
+}
+
 
 Crossroad::~Crossroad(){}
 
@@ -62,6 +83,24 @@ void Shelf::print_node_name(){
 }
 
 Shelf::~Shelf(){}
+
+
+bool Shelf::up_connected(){
+  return (this->y % 3 == 2);
+}
+bool Shelf::down_connected(){
+  return (this->y % 3 == 1);
+}
+bool Shelf::left_connected(){
+  return false;
+}
+bool Shelf::right_connected(){
+  return false;
+}
+
+
+
+
 
 
 Map::Map(int x0, int y0){
@@ -137,7 +176,13 @@ void Map::traverse_map(){
 
 void Map::traverse_map_inverse(){
   int counter = 0;
-  Node *conductor = opposite->left->left;
+  
+  Node *conductor = opposite;
+
+  while (conductor->left != NULL)
+    conductor = conductor->left;
+
+
   Node *row_up = conductor->down;  
   while (conductor !=NULL ) {
     conductor->print_node_name();
@@ -193,6 +238,22 @@ void Map::traverse_map_inverse(int x, int y){
     conductor->print_coordinate();
   }
 }
+
+Node * Map::get_node(int x,int y){
+   if(x <= size_x && y <= size_y ){
+    Node * conductor = root;
+    for (int j = 0; j < y; j++) {
+      conductor = conductor->up;
+    }
+    for (int i = 0; i < x; i++) {
+      conductor = conductor->right;
+    }
+  
+    return conductor;
+  }
+}
+
+
 
 Map::~Map(){
   
