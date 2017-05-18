@@ -40,10 +40,6 @@ void Node::print_coordinate(){
   printf("(%d, %d)\t",x,y);
 }
 
-// void Node::print_node_name(){
-//   printf("%s\t", "Node");
- 
-// }
 
 Node::~Node(){}
 
@@ -78,8 +74,8 @@ Map::Map(int x0, int y0){
   for (int i = 0; i < size_y; i++) {
     
     for (int j = 0; j < size_x; j++) {
-      if ( i % 1 == 0 ){ // should be  i % 3 == 0 
-        Node *tmp ;//= (Node*)malloc(sizeof(Crossroad));
+      if ( i % 1 == 0 ){ 
+        Node *tmp ;
         //special case for root
         if (j ==0 && i == 0) {
           tmp = new Crossroad(j, i,NULL,NULL,NULL,NULL );
