@@ -1,0 +1,54 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <arpa/inet.h>
+#include <signal.h>
+#include <wait.h>
+#include <unistd.h>
+
+#define MAXLINE 4096 /*max text line length*/
+
+int main(int argc, char **argv)
+{
+  if (argc != 3) {
+    printf("Invalid number of arguments\n");
+    exit(1);
+  }
+
+  int sockfd, server_port;
+  char sendline[MAXLINE], recvline[MAXLINE], server_ip[25];
+  struct sockaddr_in servaddr;
+
+  strcpy(server_ip, argv[1]);
+  server_port = atoi(argv[2]);
+
+  //Create a socket for the client
+  //If sockfd<0 there was an error in the creation of the socket
+  if ((sockfd = socket (AF_INET, SOCK_STREAM, 0)) <0) {
+    perror("Problem in creating the socket\n");
+    exit(2);
+  }
+    
+  //Creation of the socket
+  memset(&servaddr, 0, sizeof(servaddr));
+  servaddr.sin_family = AF_INET;
+  servaddr.sin_addr.s_addr= inet_addr(server_ip);
+  servaddr.sin_port =  htons(server_port); //convert to big-endian order
+  
+  //Connection of the client to the socket 
+  if (connect(sockfd, (struct sockaddr *) &servaddr, sizeof(servaddr))<0) {
+    perror("Problem in connecting to the server\n");
+    exit(3);
+  }
+  
+  strcpy(server_ip, inet_ntoa(servaddr.sin_addr));
+  while (recv(sockfd, recvline, MAXLINE,0) > 0){
+    printf("%s: %s\n", server_ip, recvline);
+    memset(recvline, 0, sizeof(recvline));
+  }
+  printf("Process terminated\n");
+  exit(0);
+}
