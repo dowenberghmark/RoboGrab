@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
+
 #include "map.hpp"
 #include <iostream>
 #include <typeinfo>
-
+#include <vector>
 using namespace std;
 
 Node::Node(int x0, int y0, Node * l = NULL, Node * r = NULL, Node* f = NULL, Node * b = NULL){
@@ -165,8 +165,8 @@ void Map::traverse_map(){
    printf("\n");
 }
 
-std::vector<Node::Node*> Map::getMapNodes(){
-  std::vector<Node::Node*> out_v;
+std::vector<Node*> Map::getMapNodes(){
+  std::vector<Node*> out_v;
   Node *conductor = root;
   Node *row_up = root->up;
   while (conductor !=NULL ) {

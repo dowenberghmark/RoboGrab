@@ -11,7 +11,7 @@ DatabaseHandler::~DatabaseHandler() {
 
 }
 
-void DatabaseHandler::createJSONfromMap(Map::Map * inMap) {
+void DatabaseHandler::createJSONfromMap(Map * inMap) {
 
     mongocxx::instance inst{};
     mongocxx::client conn{mongocxx::uri{}};
@@ -20,13 +20,13 @@ void DatabaseHandler::createJSONfromMap(Map::Map * inMap) {
 
     bsoncxx::builder::basic::document document{};
 
-    std::vector<Node::Node*> node_list = inMap->getMapNodes();
+    std::vector<Node*> node_list = inMap->getMapNodes();
 
     
     int nodeID = 0;
     document.append(kvp("mapName","Uppsala Warehouse"));
     document.append(kvp("nodes", [&nodeID,&node_list](sub_array nodes) {
-        for (std::vector<Node::Node*>::iterator it = node_list.begin() ; it != node_list.end(); ++it) {
+        for (std::vector<Node*>::iterator it = node_list.begin() ; it != node_list.end(); ++it) {
             nodes.append("node"+std::to_string(nodeID),[&it](sub_document node){
                 node.append(kvp("x",(*it)->getX()));
                 node.append(kvp("y",(*it)->getY()));
