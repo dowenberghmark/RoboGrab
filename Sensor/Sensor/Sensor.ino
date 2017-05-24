@@ -83,8 +83,8 @@ void loop()
    recvChar = ""; 
   if (oldHum != hum || oldTemp != temp ){
     sending_string = "t " + String(temp) + " h " + String(hum) + "\n";
-    //delay(200);
-    //Serial.print(sending_string);
+    delay(5000);
+    Serial.print(sending_string);
     oldHum = hum;
     oldTemp = temp;
   }
