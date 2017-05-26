@@ -16,35 +16,35 @@
 #include <bluetooth/hci_lib.h>
 #include <bluetooth/rfcomm.h>
 #include <string.h>
+#include "main.hpp"
 
 #define SENSOR_H
 
 
 
-struct sensor_data
-{
-  float temp, humidity;
-};
 
 
 
 class Sensor{
 
  public:
+  int id;
   //void connect();
-  Sensor(char * bluetooth_mac);
+  Sensor(char * bluetooth_mac, int id);
+  Sensor( int id);
   ~Sensor(void);
   float get_temp();
   float get_humidity();
   void exit_loop();
+  void loop();
  private:
   float get_sensor_temp();
   float get_sensor_humidity();
 
-  void loop();
+  
   float command(char * command);
+  
   struct sensor_data current_vals;
-
   struct sockaddr_rc addr;
   char sensor_mac[18];// = "30:14:12:12:13:29";
   const int buffer_size = 16;
