@@ -25,7 +25,7 @@ OBJECTS := $(shell find . ! -name "sensor.*" -name "*.cpp" -maxdepth 1)
 else
 MONGODB=-I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi
 MLIB = -L/usr/local/lib -lmongocxx -lbsoncxx
-LDFLAGS=-Wl,-rpath,/usr/local/lib -lbluetooth -lm -lrt -lpthread
+LDFLAGS=-Wl,-rpath,/usr/local/lib -lbluetooth -lm -lrt -lpthread -pthread
 OBJECTS := $(shell find . ! -name "mac_sensor.*" -name "*.cpp" -maxdepth 1)
 endif
 

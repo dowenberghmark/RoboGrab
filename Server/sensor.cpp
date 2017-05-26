@@ -10,10 +10,11 @@
 // #include <string.h>
 #include "sensor.hpp"
 
-//Constructor
-Sensor::Sensor(char * bluetooth_mac){
-  printf("%s\n","Setting up connection" );
 
+//Constructor
+Sensor::Sensor(char * bluetooth_mac, int id){
+  printf("%s\n","Setting up connection" );
+  this->id = id;
   buffer = (char *)malloc(sizeof(char)*buffer_size);
   strncpy(sensor_mac, bluetooth_mac, 18);
 
@@ -28,16 +29,28 @@ Sensor::Sensor(char * bluetooth_mac){
   loop_control = true;
 
   status = connect(sock, (struct sockaddr *)&addr, sizeof(addr));
+  if (status != -1) {
+    // this->get_sensor_temp();
+    //printf("Done temp%f\n",get_temp() );
+    //this->get_sensor_humidity();
+    //printf("Done hum%f\n",get_humidity() );
+    //    this->loop();
+  }
+ 
+}
+Sensor::Sensor(int id){
+  this->id = id;
+  loop_control = false;
+  this->current_vals.temp = -1111;
+  this->current_vals.humidity = -1111;
 
-  this->get_sensor_temp();
-  this->get_sensor_humidity();
-  this->loop();
+
 }
 
 Sensor::~Sensor(void){
   free(buffer);
   close(sock);
-  printf("%s\n", "cleaned");
+  printf("%s\n", "cleaned sensor object");
 }
 
 void Sensor::exit_loop(){
@@ -79,11 +92,12 @@ float Sensor::get_sensor_humidity(){
 void Sensor::loop(){
   // send a message
   if( this->status == 0 ) {
-
+    
     char received[buffer_size];
     char received1[buffer_size];
     float tmpTemp = 0;
     float tmpHum = 0;
+    int counter = 0;
     while(this->loop_control){
 
       recv(sock, buffer,buffer_size,MSG_WAITALL);
@@ -91,15 +105,22 @@ void Sensor::loop(){
 
       if (tmpTemp != this->current_vals.temp) {
         this->current_vals.temp = tmpTemp;
-        printf("Temp: %f Humidity: %f \n", current_vals.temp, current_vals.humidity );
+        
       }
 
       if (tmpHum != this->current_vals.humidity) {
         this->current_vals.humidity = tmpHum;
-        printf("Temp: %f Humidity: %f \n", current_vals.temp, current_vals.humidity );
+       
       }
+      if (counter > 0) {
+        this->exit_loop();
+      }
+      counter++;
+       printf("Temp: %.2f Humidity: %.2f \n", current_vals.temp, current_vals.humidity );
 
-
+    }
+    if (counter > 0) {
+      this->loop_control = true;
     }
   }
 
@@ -107,5 +128,7 @@ void Sensor::loop(){
     perror("uh oh");
 
   }
-
+  //badcode but it works
+  
+  
 }
