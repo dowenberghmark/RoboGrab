@@ -1,6 +1,5 @@
 #include "databaseHandler.hpp"
-#include "map.hpp"
-#include <vector>
+//#include <vector>
 
 
 DatabaseHandler::DatabaseHandler() {
@@ -12,9 +11,13 @@ DatabaseHandler::~DatabaseHandler() {
 }
 
 void DatabaseHandler::createJSONfromMap(Map * inMap) {
-
+    //only once
     mongocxx::instance inst{};
+    //connect to a server running on localhost on port 27017
+    //this should be changed to mongocxx::uri uri("mongodb://xxx.xxx.xxx.xxx:27017");
     mongocxx::client conn{mongocxx::uri{}};
+
+    //choose database & collection to access
     mongocxx::database db = conn["warehouseSWE"];
     auto collection = db["map"];
 
@@ -55,4 +58,63 @@ void DatabaseHandler::createJSONfromMap(Map * inMap) {
     for (auto&& doc : cursor) {
         std::cout << bsoncxx::to_json(doc) << std::endl;
     }
+}
+
+
+void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun){
+    //only once
+    mongocxx::instance inst{};
+    //connect to a server running on localhost on port 27017
+    //this should be changed to mongocxx::uri uri("mongodb://xxx.xxx.xx.xxx:27017");
+    mongocxx::client conn{mongocxx::uri{}};
+
+    //choose database & collection to access
+    mongocxx::database db = conn["warehouseSWE"];
+    auto collection = db["sensors"];
+
+    const char* id = sensorID;
+
+
+    collection.update_one(
+        document{} << "_id" << sensorID << finalize,
+        document{} << "$set" << open_document <<
+        "sunlight" << sun << close_document << finalize);
+
+    collection.update_one(document{} << "_id" << sensorID << finalize,
+        document{} << "$set" << open_document <<
+        "temperature" << temp << close_document << finalize);
+}
+
+void DatabaseHandler::sendRobotPosition(const char* nodePosition, const char* robotID){
+    //only once
+     mongocxx::instance inst{};
+    //connect to a server running on localhost on port 27017
+    //this should be changed to mongocxx::uri uri("mongodb://xxx.xxx.xx.xxx:27017");
+    mongocxx::client conn{mongocxx::uri{}};
+
+    //choose database & collection to access
+    mongocxx::database db = conn["warehouseSWE"];
+    auto collection = db["robots"];
+
+    collection.update_one(
+        document{} << "_id" << robotID << finalize,
+        document{} << "$set" << open_document <<
+        "position" << nodePosition << close_document << finalize);
+}
+
+void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){
+        //only once
+     mongocxx::instance inst{};
+    //connect to a server running on localhost on port 27017
+    //this should be changed to mongocxx::uri uri("mongodb://xxx.xxx.xx.xxx:27017");
+    mongocxx::client conn{mongocxx::uri{}};
+
+    //choose database & collection to access
+    mongocxx::database db = conn["warehouseSWE"];
+    auto collection = db["robots"];
+
+    collection.update_one(
+        document{} << "_id" << robotID << finalize,
+        document{} << "$set" << open_document <<
+        "available" << isAvailable << close_document << finalize);
 }

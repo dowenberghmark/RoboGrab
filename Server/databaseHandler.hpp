@@ -17,6 +17,7 @@
 #include <mongocxx/stdx.hpp>
 #include <mongocxx/uri.hpp>
 #include <mongocxx/instance.hpp>
+#include "map.hpp"
 
 using bsoncxx::builder::basic::sub_document;
 using bsoncxx::builder::basic::sub_array;
@@ -24,7 +25,22 @@ using bsoncxx::builder::basic::kvp;
 using bsoncxx::builder::stream::document;
 using bsoncxx::builder::stream::finalize;
 
-#include "map.hpp"
+
+#include <cstdint>
+#include <iostream>
+#include <vector>
+#include <bsoncxx/json.hpp>
+#include <mongocxx/client.hpp>
+#include <mongocxx/stdx.hpp>
+#include <mongocxx/uri.hpp>
+
+using bsoncxx::builder::stream::close_array;
+using bsoncxx::builder::stream::close_document;
+using bsoncxx::builder::stream::document;
+using bsoncxx::builder::stream::finalize;
+using bsoncxx::builder::stream::open_array;
+using bsoncxx::builder::stream::open_document;
+//#include "map.hpp"
 
 #include <iostream>
 
@@ -54,22 +70,24 @@ class DatabaseHandler{
     /**
       send the robot positions to the GUI to display
     **/
-    void sendRobotPosition();
+    void sendRobotPosition(const char* node, const char* robotID);
 
     /**
       update a sensor value
+      PARAM: sensorID, temperature, sunlight
+      updates a sensor's temperature and sunlight values
     **/
-    void updateSensorValue();
+    void updateSensorValue(const char* sensorID, int temp, int sun);
 
     /**
       send the status change of a robot
     **/
-    void updateRobotStatus();
+    void updateRobotStatus(bool isAvailable, const char* robotID);
 
     /**
         get Map from JSON-file
     **/
-    void createJSONfromMap(Map *);
+   void createJSONfromMap(Map *);
 
   private:
     mongocxx::client conn;

@@ -3,18 +3,29 @@
 #
 #
 UNAME_S := $(shell uname -s)
+UNAME_N := $(shell uname -n)
 CC=g++
 PORT=1500
 SERVERIP=
-ifeq ($(UNAME_S), Darwin)
+
+ifeq ($(UNAME_N),Andys-MBP.lan)
+MONGODB= -I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi
+MLIB = -L/usr/local/lib -lmongocxx -lbsoncxx
+LDFLAGS=-Wl,-rpath,/usr/local/lib
+OBJECTS := $(shell find . ! -name "sensor.*" -name "*.cpp" -maxdepth 1)
+
+else ifeq ($(UNAME_S), Darwin)
 MONGODB= -I/usr/local/Cellar/include/bsoncxx/v_noabi -I/usr/local/Cellar/include/mongocxx/v_noabi
 MLIB = -L/usr/local/Cellar/lib -lmongocxx -lbsoncxx
 LDFLAGS=-Wl,-rpath,/usr/local/Cellar/lib
 OBJECTS := $(shell find . ! -name "sensor.*" -name "*.cpp" -maxdepth 1)
+
+
+
 else
 MONGODB=-I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi
 MLIB = -L/usr/local/lib -lmongocxx -lbsoncxx
-LDFLAGS=-Wl,-rpath,/usr/local/lib -lbluetooth -lm -lrt -lpthread
+LDFLAGS=-Wl,-rpath,/usr/local/lib -lbluetooth -lm -lrt -lpthread -pthread
 OBJECTS := $(shell find . ! -name "mac_sensor.*" -name "*.cpp" -maxdepth 1)
 endif
 

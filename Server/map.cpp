@@ -62,10 +62,15 @@ std::string Crossroad::get_node_type() {
 
 Crossroad::~Crossroad(){}
 
-Shelf::Shelf(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0, l, r, f, b){}
+Shelf::Shelf(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0, l, r, f, b){
+  struct sensor_data tmp;
+  tmp.temp = -2222.0;
+  tmp.humidity = -2222.0;
+  sensor_values = tmp;
+}
 
 void Shelf::print_node_name(){
-  printf("Shelf");
+  printf("t:%.2f,h:%.2f", sensor_values.temp, sensor_values.humidity);
 
 }
 
@@ -95,9 +100,10 @@ bool Shelf::right_connected(){
 
 
 Map::Map(int x0, int y0){
+  
   size_x = x0;
   size_y = y0;
-
+  amount_shelves = 0;
   root = NULL;
   Node *previous_row, * up_row, *previous_pos;
 
@@ -127,8 +133,10 @@ Map::Map(int x0, int y0){
             tmp = new Crossroad(j, i, previous_pos,NULL,NULL,NULL );
 
           }
-          else
+          else{
+            amount_shelves++;
             tmp = new Shelf(j,i, previous_pos,NULL,NULL,NULL);
+          }
           previous_pos->right = tmp;
           if (i > 0) {
              previous_row = previous_row->right;
@@ -145,6 +153,7 @@ Map::Map(int x0, int y0){
 
 
   }
+  init_shelf_vector();
 }
 
 void Map::traverse_map(){
@@ -180,6 +189,27 @@ std::vector<Node*> Map::getMapNodes(){
 
   }
   return out_v;
+}
+std::vector<Shelf *>* Map::getShelfNodes(){
+  return &this->shelf;
+}
+void Map::init_shelf_vector(){
+  Node *conductor = root;
+  Node *row_up = root->up;
+  while (conductor !=NULL ) {
+    if (conductor->get_node_type() == "Shelf") {
+      this->shelf.push_back((Shelf *)conductor);
+    }
+    
+
+    conductor = conductor->right;
+    if (conductor == NULL && row_up !=NULL){
+      conductor = row_up;
+      row_up = conductor->up;
+    }
+
+  }
+  
 }
 
 void Map::traverse_map_inverse(){
