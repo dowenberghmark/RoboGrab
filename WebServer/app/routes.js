@@ -1,5 +1,5 @@
 
-module.exports = (app) => {
+module.exports = (app,url,MongoClient) => {
   // Page routing being available for Angular
   const pages = [
     '/',

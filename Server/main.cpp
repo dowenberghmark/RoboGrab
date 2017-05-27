@@ -28,12 +28,12 @@
   }
   if (argc == 1 || !strcmp(argv[1],"map")) {
     //Starting Map-test
-    int size1 =  10, size2 = 10;
+    int size1 =  5, size2 = 5;
     Map * a = new Map(size1,size2);
     Node * printer = a->root;
 
-    //DatabaseHandler *databaseHandler_ = new DatabaseHandler();
-    //databaseHandler_->createJSONfromMap(a);
+    DatabaseHandler *databaseHandler_ = new DatabaseHandler();
+    databaseHandler_->createJSONfromMap(a);
     //a.traverse_map();
     // inverse function makes it look like the layout in design documents
     a->traverse_map_inverse();

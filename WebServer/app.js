@@ -2,6 +2,10 @@
 const express = require('express');
 const app = express();
 var mongo = require("mongodb");
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+var ObjectId = require('mongodb').ObjectID;
+var url = 'mongodb://localhost:27017/warehouseSWE';
 var public_path = require('path');
 var router = express.Router();
 const port = 3000;
@@ -24,7 +28,7 @@ app.use(function(request, response, next) {
 });
 
 //include MongoDB-script
-require(__dirname + '/app/mongoHandler')(app,mongo);
+require(__dirname + '/app/mongoHandler')(app,mongo,MongoClient);
 
 //Error message handling: should be last middleware
 app.use((err, request, response, next) => {
@@ -38,7 +42,7 @@ app.use('/static', express.static(__dirname + '/public'));
 app.use('/sys', express.static(__dirname + '/app'));
 
 // Get routes for web access
-require(__dirname + '/app/routes')(app);
+require(__dirname + '/app/routes')(app,url,MongoClient);
 
 app.listen(port, (err) => {
   if (err) {

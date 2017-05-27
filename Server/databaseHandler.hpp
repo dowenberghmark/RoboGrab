@@ -21,6 +21,8 @@
 using bsoncxx::builder::basic::sub_document;
 using bsoncxx::builder::basic::sub_array;
 using bsoncxx::builder::basic::kvp;
+using bsoncxx::builder::stream::document;
+using bsoncxx::builder::stream::finalize;
 
 #include "map.hpp"
 

@@ -7,11 +7,11 @@ module.exports = (app,mongo) => {
   		if(typeof(config)!="object") {
   			throw("config required for MongoConnection");
   		}
-  		if(typeof(config.SocketIOPort)!="number") {
+  		if(config.SocketIOPorts.length == 0 || typeof(config.SocketIOPorts[0])!="number") {
   			throw("SocketIOPort required and must be a number");
   		}
-  		if(typeof(config.Collection)!="string") {
-  			throw("Collection required");
+  		if(config.Collections.length == 0 || typeof(config.Collections[0])!="string") {
+  			throw("At least 1 collection required");
   		}
   		if(typeof(config.Database)!="string") {
   			throw("Database required");
@@ -29,8 +29,8 @@ module.exports = (app,mongo) => {
   		-- When  a client connects, emit a string "connected"
   		-- Attach listeners to socket commands on a new connection.
   	*/
-  	function loadSocket(collection) {
-  		var io = require('socket.io').listen(config.SocketIOPort);
+  	function loadSocket(collection,collection_nr) {
+  		var io = require('socket.io').listen(config.SocketIOPorts[collection_nr]);
 
   		function cleanup(documents) {
   			var max_limit = 100;
@@ -49,12 +49,6 @@ module.exports = (app,mongo) => {
   		function findAllData(callback) {
   			collection.find({}, function(error, cursor) {
   				cursor.toArray(function(err,documents){
-
-  					//Reversing the documents  - this may change as per implementation
-  					documents.reverse();
-
-  					// This is specific to the demo - cap the todos
-  					cleanup(documents);
 
   					callback(err, documents)
   				});
@@ -146,10 +140,15 @@ module.exports = (app,mongo) => {
 
   			console.log("Connection to the database established");
 
-  			db.collection(config.Collection, function(error, collection) {
-  				console.log("We have the collection, starting socket. DB can now be accessed");
-  				loadSocket(collection)
-  			});
+			for(i in config.Collections){
+				var coll = config.Collections[i];
+				var coll_name = coll;
+				db.collection(coll, function(error, coll) {
+					console.log("We have the collection \"",coll_name,"\", starting socket. Collection can now be accessed at //http://localhost:", config.SocketIOPorts[i]);
+					loadSocket(coll,i);
+				});
+				i = i+1;
+			}
   		});
   	}
 
@@ -157,15 +156,15 @@ module.exports = (app,mongo) => {
   }
 
 
-  // todo: The definition for MongoConnection above may be moved out as a module later...
-
-  var socketPort = 27017;
+  // The port for the socket to listen
+  var socketPort = 27018;
 
   // Start a MongoConnection
   var m = new MongoConnection({
-  	SocketIOPort: socketPort, // SocketIO port where this stuff will load.
-  	Collection: "sensors", // we have the robograb collection
+  	SocketIOPorts: [socketPort,socketPort+1], // SocketIO port, one for each collection!
+  	Collections: ["sensors","map"], // we have the robograb collection
   	Database: "warehouseSWE", // database name
   	MongoServer:"localhost" // server name
   });
+
 };

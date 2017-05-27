@@ -22,7 +22,8 @@ void DatabaseHandler::createJSONfromMap(Map * inMap) {
 
     std::vector<Node*> node_list = inMap->getMapNodes();
 
-    
+    collection.delete_one(bsoncxx::builder::stream::document{} << "mapName" << "Uppsala Warehouse" << finalize);
+
     int nodeID = 0;
     document.append(kvp("mapName","Uppsala Warehouse"));
     document.append(kvp("nodes", [&nodeID,&node_list](sub_array nodes) {
