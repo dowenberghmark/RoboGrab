@@ -8,12 +8,7 @@
 #endif
 #include <string>
 
-<<<<<<< HEAD
  int mainTest(int argc, char *argv[]) {
-=======
-
- int main(int argc, char *argv[]) {
->>>>>>> 88a62254aa262a93f91ae36018e8824ae6ee5287
 
 
   if (argc == 1 || !strcmp(argv[1],"updateSensor")) {
@@ -56,9 +51,4 @@
 
 
      return 0;
-<<<<<<< HEAD
- }
-=======
-
 }
->>>>>>> 88a62254aa262a93f91ae36018e8824ae6ee5287
