@@ -9,6 +9,7 @@ DatabaseHandler::DatabaseHandler() {
 DatabaseHandler::~DatabaseHandler() {
 
 }
+
 void DatabaseHandler::createJSONfromMap(Map * inMap) {
     //only once
     mongocxx::instance inst{};

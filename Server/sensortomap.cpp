@@ -41,6 +41,7 @@ SensorToMap::SensorToMap(int number_sensors, Map * map){
   }
   //std::this_thread::sleep_for(std::chrono::seconds(15));
 }
+
 std::thread  SensorToMap::init(const char * mac, unsigned int id){
   
   return std::thread([=] {one_sensor(mac,id);});
