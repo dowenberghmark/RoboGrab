@@ -9,7 +9,6 @@ DatabaseHandler::DatabaseHandler() {
 DatabaseHandler::~DatabaseHandler() {
 
 }
-
 void DatabaseHandler::createJSONfromMap(Map * inMap) {
     //only once
     mongocxx::instance inst{};
@@ -59,7 +58,6 @@ void DatabaseHandler::createJSONfromMap(Map * inMap) {
         std::cout << bsoncxx::to_json(doc) << std::endl;
     }
 }
-
 
 void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun){
     //only once

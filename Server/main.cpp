@@ -36,8 +36,6 @@ int main(int argc, char *argv[]) {
   }
   if (argc == 1 || !strcmp(argv[1],"map")) {
     //Starting Map-test
-    int size1 =  5, size2 = 5;
-    
     Map * a = new Map(size_mapX,size_mapY);
 
     DatabaseHandler *databaseHandler_ = new DatabaseHandler();

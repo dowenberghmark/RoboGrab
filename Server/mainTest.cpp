@@ -8,7 +8,6 @@
 #endif
 #include <string>
 
-
  int mainTest(int argc, char *argv[]) {
 
 
@@ -52,5 +51,4 @@
 
 
      return 0;
-
-}
+ }

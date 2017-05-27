@@ -88,7 +88,7 @@ class DatabaseHandler{
         get Map from JSON-file
     **/
    void createJSONfromMap(Map *);
-
+    
   private:
     mongocxx::client conn;
 
