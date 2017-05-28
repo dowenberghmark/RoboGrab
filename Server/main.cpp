@@ -22,7 +22,7 @@
 #include "sensortomap.hpp"
 #include <thread>
 #include <chrono>
-
+#include <cassert>
 #define UPPSALA
 int main(int argc, char *argv[]) {
   
@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
     //Starting Map-test
     Map * a = new Map(size_mapX,size_mapY);
 
-    DatabaseHandler *databaseHandler_ = new DatabaseHandler();
-    databaseHandler_->createJSONfromMap(a);
+    //DatabaseHandler *databaseHandler_ = new DatabaseHandler();
+    //databaseHandler_->createJSONfromMap(a);
     //a.traverse_map();
     // inverse function makes it look like the layout in design documents
     
@@ -54,11 +54,48 @@ int main(int argc, char *argv[]) {
 
     
     
-    a->traverse_map_inverse();
-
-
-
-
+     a->traverse_map_inverse();
+     printf("%s\n","From (0,0) to (5,4)" );
+     std::vector<std::string> assert_list = {"up","up","up","right","right","right","right","right","up"};
+     std::vector<std::string> assert_list2 = {"up","right","right","right","right","right","right","right","right","right","down","down","down","down","down","down","down","down","down","left"};
+     std::vector<std::string> path_list = a->path(a->get_node(0,0), a->get_node(5,4) );
+     printf("%s\n","From (0,0) to (5,4)" );
+     for (auto a_node : path_list ){
+       std::cout << a_node << "\t";
+     }
+     assert(path_list.size() == assert_list.size());
+     for (int k = 0; k < path_list.size(); k++) {
+       assert(assert_list.at(k) == path_list.at(k));
+     }
+    
+    
+     printf("%s\n","From (5,4) to (0,0)" );
+     path_list = a->path(a->get_node(5,4), a->get_node(0,0) );
+    
+     for (auto a_node : path_list ){
+       std::cout << a_node << "\t";
+      
+     }
+    
+    ;printf("%s\n","From (0,8) to (8,0)" );
+    path_list = a->path(a->get_node(0,8), a->get_node(8,0) );
+    
+     for (auto a_node : path_list ){
+       std::cout << a_node << "\t";     
+     }
+     assert(path_list.size() == assert_list2.size());
+     for (int k = 0; k < path_list.size(); k++) {
+       
+       assert(assert_list2.at(k) == path_list.at(k));
+     }
+    
+     printf("%s\n","From (9,7) to (8,8)" );
+     path_list =  a->path(a->get_node(9,7), a->get_node(8,8) );
+    
+     for (auto a_node : path_list ){
+       std::cout << a_node << "\t";
+     }
+   
     while (1) {
       std::this_thread::sleep_for(std::chrono::seconds(3));
       controling_sensors->update_values();
