@@ -88,7 +88,7 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
     update_sensor_to_db();
  
     std::cout << "Event emited" << std::endl;
-    h.sync_close();
+   
 }
 
 void DatabaseHandler::sendRobotPosition(const char* nodePosition, const char* robotID){
