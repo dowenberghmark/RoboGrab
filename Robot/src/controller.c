@@ -8,6 +8,7 @@
 #include <signal.h>
 #include <wait.h>
 #include <unistd.h>
+#include "protocol.h"
 
 #define MAXLINE 4096 /*max text line length*/
 
@@ -46,8 +47,15 @@ int main(int argc, char **argv)
   
   strcpy(server_ip, inet_ntoa(servaddr.sin_addr));
   while (recv(sockfd, recvline, MAXLINE,0) > 0){
-    printf("%s: %s\n", server_ip, recvline);
+    Msg msg = getMsg(recvline);
     memset(recvline, 0, sizeof(recvline));
+    printf("%s: %s\n", msg.type, msg.content);
+    int size;
+    char **dirs = getDirs(msg.content, &size);
+    for (int i = 0; i < size; i++) {
+      printf("%s ", dirs[i]);
+    }
+    printf("\n");
   }
   printf("Process terminated\n");
   exit(0);
