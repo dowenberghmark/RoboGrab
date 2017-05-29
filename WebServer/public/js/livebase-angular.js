@@ -7,7 +7,7 @@ angular.module('livebase').factory('angularBase', function($rootScope,$q) {
 	function updateUI() {
 		var scp = $rootScope;
 		if(!scp.$$phase) {
-			console.log('digest called');
+			console.log('UI will be updated');
 			scp.$digest();
 		}
 	}

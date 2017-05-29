@@ -110,6 +110,11 @@ module.exports = (app,mongo) => {
   				deleteData(data, broadcastData);
   			});
 
+			socket.on('updateValues', function() {
+				console.log("Someone wants to update values");
+				broadcastData();
+			})
+
   			socket.emit('message', {message: 'Connected to socket'});
 
   		});
