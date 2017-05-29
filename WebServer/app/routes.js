@@ -21,4 +21,11 @@ module.exports = (app,url,MongoClient) => {
     res.render('page_' + req.params.view, { });
   });
 
+  app.get('/update-sensors', (req,res) => {
+    var io = require('socket.io-client');
+    var socket = io.connect('http://localhost:27018');
+    socket.emit('updateValues');
+    res.send("");
+  });
+
 };
