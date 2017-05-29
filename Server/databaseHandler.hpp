@@ -18,6 +18,7 @@
 #include <mongocxx/uri.hpp>
 #include <mongocxx/instance.hpp>
 #include "map.hpp"
+#include "../dep/build/include/sio_client.h"
 
 using bsoncxx::builder::basic::sub_document;
 using bsoncxx::builder::basic::sub_array;

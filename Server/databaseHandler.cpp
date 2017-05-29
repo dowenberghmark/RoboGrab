@@ -1,8 +1,8 @@
 #include "databaseHandler.hpp"
 //#include <vector>
 
-
 DatabaseHandler::DatabaseHandler() {
+
 
 }
 
@@ -73,6 +73,9 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
 
     const char* id = sensorID;
 
+    sio::client h;
+    h.connect("http://localhost:27018");
+
 
     collection.update_one(
         document{} << "_id" << sensorID << finalize,
@@ -82,6 +85,8 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
     collection.update_one(document{} << "_id" << sensorID << finalize,
         document{} << "$set" << open_document <<
         "temperature" << temp << close_document << finalize);
+ 
+    h.socket()->emit("update-all-data");
 }
 
 void DatabaseHandler::sendRobotPosition(const char* nodePosition, const char* robotID){
