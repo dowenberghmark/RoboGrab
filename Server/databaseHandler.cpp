@@ -135,7 +135,7 @@ void update_sensor_to_db(){
       curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
  
       /* Perform the request, res will get the return code */ 
-      res = curl_easy_perform(curl);
+      auto res = curl_easy_perform(curl);
       /* Check for errors */ 
     
       /* always cleanup */ 

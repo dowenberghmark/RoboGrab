@@ -18,7 +18,7 @@ else ifeq ($(UNAME_S), Darwin)
 MONGODB= -I/usr/local/Cellar/include/bsoncxx/v_noabi -I/usr/local/Cellar/include/mongocxx/v_noabi
 MLIB = -L/usr/local/Cellar/lib -lmongocxx -lbsoncxx -I/usr/local/Cellar/boost/1.64.0_1/include  -L/usr/local/Cellar/boost/1.64.0_1/ -I/opt/local/include -I../dep/build/include -L../dep/build/lib/Release -lsioclient -lboost_system -lcurl
 LDFLAGS=-Wl,-rpath,/usr/local/Cellar/lib
-OBJECTS := $(shell find . ! -name "sensor.*" -name "*.cpp" -maxdepth 1)
+OBJECTS := $(shell find . ! -name "sensor.*" ! -name "job.*" ! -name "jobScheduler.*" -name "*.cpp" -maxdepth 1)
 
 else
 MONGODB=-I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi
