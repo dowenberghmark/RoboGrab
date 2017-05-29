@@ -5,20 +5,20 @@ CFLAGS=-I$(IDIR)
 ODIR=obj
 LDIR =../lib
 
-LIBS=-lm libev3dev-c.a
+LIBS=-lm 
 
-_DEPS = 
+_DEPS = robolib.h protocol.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = lab02.o 
+_OBJ = robolib.o controller.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
 $(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -std=c99 -o $@ $< $(CFLAGS)
 
-robot: $(OBJ)
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
+robolib: $(OBJ)
+	gcc -o $@ $^ $(CFLAGS) $(LDIR)/libev3dev-c.a  $(LIBS)
 
 .PHONY: clean
 
