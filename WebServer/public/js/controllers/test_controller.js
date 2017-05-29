@@ -11,7 +11,7 @@
     	$scope.changeSensorValues = function(index) {
     		var sensor = $scope.sensors[index];
     		sensor = { _id: sensor._id, sunlight: sensor.sunlight, temperature: sensor.temperature, __v: sensor.__v };
-    		Todos.put(sensor);
+    		Sensors.put(sensor);
     	}
 
 
