@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   Map * mainMap = new Map(MAP_SIZE_X,MAP_SIZE_Y);
 
   DatabaseHandler *databaseHandler_ = new DatabaseHandler();
-  databaseHandler_->updateSensorValue("sensor2",23,8934);
+  databaseHandler_->updateSensorValue("sensor1",23,8934);
   
   
   mainMap->traverse_map_inverse();

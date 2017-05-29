@@ -13,7 +13,11 @@ SensorToMap::SensorToMap(int number_sensors, Map * map){
   //may have problem with rest in integer division.... and i'm counting wrong by 2 division and need some jumping be th shelfs..........
   x_part = this->x / number_sensor;
   y_part = this->y/2 * 3;// / number_sensor;
-  
+  //BAD FIX
+  if (this->x % number_sensor == 1) {
+    number_sensor++;
+    
+  }
   int start = BLUETOOTH_MAC.size();
 
   our_thread = new std::thread[number_sensor];

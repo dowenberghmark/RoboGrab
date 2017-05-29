@@ -1,4 +1,5 @@
 #include "databaseHandler.hpp"
+
 //#include <vector>
 
 DatabaseHandler::DatabaseHandler() {
@@ -72,9 +73,7 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
     auto collection = db["sensors"];
 
     const char* id = sensorID;
-
-    sio::client h;
-    h.connect("http://127.0.0.1:27018");
+    
 
     collection.update_one(
         document{} << "_id" << sensorID << finalize,
@@ -85,9 +84,11 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
         document{} << "$set" << open_document <<
         "temperature" << temp << close_document << finalize);
 
-    h.socket()->emit("updateValues");
+
+    update_sensor_to_db();
+ 
     std::cout << "Event emited" << std::endl;
-    h.sync_close();
+   
 }
 
 void DatabaseHandler::sendRobotPosition(const char* nodePosition, const char* robotID){
@@ -122,4 +123,22 @@ void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){
         document{} << "_id" << robotID << finalize,
         document{} << "$set" << open_document <<
         "available" << isAvailable << close_document << finalize);
+}
+void update_sensor_to_db(){
+    CURL *curl;
+  
+ 
+    curl = curl_easy_init();
+    if(curl) {
+      curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-sensors");
+      /* example.com is redirected, so we tell libcurl to follow redirection */ 
+      curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+ 
+      /* Perform the request, res will get the return code */ 
+      res = curl_easy_perform(curl);
+      /* Check for errors */ 
+    
+      /* always cleanup */ 
+      curl_easy_cleanup(curl);
+    }
 }

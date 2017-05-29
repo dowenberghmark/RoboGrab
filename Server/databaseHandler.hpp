@@ -18,8 +18,11 @@
 #include <mongocxx/uri.hpp>
 #include <mongocxx/instance.hpp>
 #include "map.hpp"
-#include "../dep/build/include/sio_client.h"
+#include <curl/curl.h>
 
+//#include "../dep/build/include/sio_client.h"
+#include "../../socket.io-client-cpp/build/include/sio_client.h"
+//#include <sio_client.h>
 using bsoncxx::builder::basic::sub_document;
 using bsoncxx::builder::basic::sub_array;
 using bsoncxx::builder::basic::kvp;
@@ -44,6 +47,7 @@ using bsoncxx::builder::stream::open_document;
 //#include "map.hpp"
 
 #include <iostream>
+void update_sensor_to_db();
 
 class DatabaseHandler{
   public:
