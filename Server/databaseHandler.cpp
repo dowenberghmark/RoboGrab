@@ -126,7 +126,7 @@ void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){
 }
 void update_sensor_to_db(){
     CURL *curl;
-  
+    CURLcode res;  
  
     curl = curl_easy_init();
     if(curl) {
