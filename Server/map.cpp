@@ -40,15 +40,16 @@ void Crossroad::print_node_name(){
   std::cout << ( "Crossroad");
 
 }
+//may have fucked it up..
 bool Crossroad::up_connected(){
-  return (this->up != NULL);
+  return (this->up != NULL && this->right != NULL  );
 }
 bool Crossroad::down_connected(){
-  return (this->down != NULL);
+  return (this->down != NULL && this->left!= NULL );
 }
 bool Crossroad::left_connected(){
     Node* p = new Crossroad(1,1,NULL,NULL,NULL,NULL);
-  return (this->left != NULL && typeid(*p) == typeid(*(this->left))  );
+    return (this->left != NULL && typeid(*p) == typeid(*(this->left))  && (this-> right != NULL || this->getY() == 0));
 }
 bool Crossroad::right_connected(){
   Node* p = new Crossroad(1,1,NULL,NULL,NULL,NULL);
@@ -64,8 +65,8 @@ Crossroad::~Crossroad(){}
 
 Shelf::Shelf(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0, l, r, f, b){
   struct sensor_data tmp;
-  tmp.temp = -2222.0;
-  tmp.humidity = -2222.0;
+  tmp.temp = 0.0;
+  tmp.humidity = -2.0;
   sensor_values = tmp;
 }
 
@@ -174,6 +175,21 @@ void Map::traverse_map(){
    printf("\n");
 }
 
+
+void Map::traverse_set_null_parent(){
+  Node *conductor = root;
+  Node *row_up = root->up;
+  while (conductor !=NULL ) {
+    conductor->parent = NULL;
+    
+
+    conductor = conductor->right;
+    if (conductor == NULL && row_up !=NULL){
+      conductor = row_up;
+      row_up = conductor->up;
+    }
+  }
+}
 std::vector<Node*> Map::getMapNodes(){
   std::vector<Node*> out_v;
   Node *conductor = root;
@@ -291,6 +307,110 @@ Node * Map::get_node(int x,int y){
   }
     return conductor;
 }
+
+
+std::vector<std::string>  Map::path(Node * start, Node * end){
+  std::vector<std::string> path_list;
+  std::vector<std::string> reversed_path_list;
+  std::vector<Node * > visited;
+  std::vector<Node * > queue;
+  visited.push_back(start);
+  queue.push_back(start);
+  
+  bool check = false;
+ 
+  Node * tmp;
+  end->parent = NULL;
+
+  while (!queue.empty()) {
+
+
+        
+    tmp = queue.at(0);
+    queue.erase(queue.begin(),queue.begin()+1);
+
+    if (tmp->getX() == end->getX() && tmp->getY() == end->getY()) {
+      queue.erase(queue.begin(),queue.end());
+    }else{
+      if (tmp->up_connected()){
+        
+        check = true;
+        for(auto k : visited  ){
+          if (k == tmp->up)
+            check = false;
+        }
+        if (check) {
+          queue.push_back(tmp->up);
+          visited.push_back(tmp->up);
+          (tmp->up)->parent = tmp;
+        }
+      }
+      if (tmp->down_connected()){
+        check = true;
+        
+        for(auto k : visited  ){
+          if (k == tmp->down)
+            check = false;
+        }
+        if (check) {
+          queue.push_back(tmp->down);
+          visited.push_back(tmp->down);
+          (tmp->down)->parent = tmp;
+        }
+      }if (tmp->right_connected()){
+        check = true;
+        
+        for(auto k : visited  ){
+          if (k == tmp->right)
+            check = false;
+          
+        }
+        if (check) {
+          queue.push_back(tmp->right);
+          visited.push_back(tmp->right);
+          (tmp->right)->parent = tmp;
+        }
+      }if (tmp->left_connected()){
+        
+        check = true;
+
+        for(auto k : visited  ){
+          if (k == tmp->left)
+            check = false;
+        }
+        if (check) {
+          queue.push_back(tmp->left);
+          visited.push_back(tmp->left);
+          (tmp->left)->parent = tmp;
+        }
+      }
+      
+      
+    }
+    // ++i;
+  }
+  
+  
+  while(tmp->parent !=NULL){
+    
+    if( tmp->parent->up == tmp)
+      reversed_path_list.push_back("up");
+    else if( tmp->parent->down == tmp)
+      reversed_path_list.push_back("down");
+    else if( tmp->parent->left == tmp)
+      reversed_path_list.push_back("left");
+    else if( tmp->parent->right == tmp)
+      reversed_path_list.push_back("right");
+    tmp = tmp->parent;
+  }
+
+   for (int p = reversed_path_list.size()-1; p >=0 ; p--) {
+     path_list.push_back(reversed_path_list.at(p));
+   }
+   this->traverse_set_null_parent();
+  return path_list;
+}
+
 
 
 

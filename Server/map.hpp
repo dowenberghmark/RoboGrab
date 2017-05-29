@@ -21,7 +21,7 @@ public:
   virtual bool down_connected()=0;
   virtual bool left_connected()=0;
   virtual bool right_connected()=0;
-  
+  Node * parent;
   int getX();
   int getY();
   virtual std::string get_node_type()=0;
@@ -65,6 +65,8 @@ private:
   
   std::vector<Shelf *> shelf;
   void init_shelf_vector();
+  
+  
 public:
   
   Node * root,* opposite;
@@ -72,13 +74,14 @@ public:
   void traverse_map();
   std::vector<Shelf *> shelves_list;
 
+  std::vector<std::string> path(Node * start, Node * end);
+  
   // inverse function makes it look like the layout in design documents
   void traverse_map_inverse();
-
   void traverse_map(int x, int y);
   void traverse_map_vertical(int x, int y);
   void traverse_map_inverse(int x, int y);
-
+  void  traverse_set_null_parent();
   
   int getX(){return this->size_x;};
   int getY(){return this->size_y;};

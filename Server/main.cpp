@@ -22,68 +22,48 @@
 #include "sensortomap.hpp"
 #include <thread>
 #include <chrono>
+#include <cassert>
 
-#define UPPSALA
+void robot_thread_function();
+void map_thread_function(Map * ourMap);
+
+
 int main(int argc, char *argv[]) {
+    
+  Map * mainMap = new Map(MAP_SIZE_X,MAP_SIZE_Y);
+
+  DatabaseHandler *databaseHandler_ = new DatabaseHandler();
+  databaseHandler_->createJSONfromMap(mainMap);
   
-  int size_mapX =  10, size_mapY = 10;
-
-  if (argc == 1 || !strcmp(argv[1],"server")) {
-    //Starting the roboGrab server
-    RoboGrab *robograb = new RoboGrab();
-    robograb->start(5000);
-    delete robograb;
+  
+  mainMap->traverse_map_inverse();
+  std::vector<std::string> path_list = mainMap->path(mainMap->get_node(0,0), mainMap->get_node(5,4) );
+  for (auto a_node : path_list ){
+    std::cout << a_node << "\t";
   }
-  if (argc == 1 || !strcmp(argv[1],"map")) {
-    //Starting Map-test
-    Map * a = new Map(size_mapX,size_mapY);
+  std::thread thread_map (map_thread_function, mainMap);
+  std::thread thread_robots(robot_thread_function);
 
-    DatabaseHandler *databaseHandler_ = new DatabaseHandler();
-    databaseHandler_->createJSONfromMap(a);
-    //a.traverse_map();
-    // inverse function makes it look like the layout in design documents
-    
-    printf("%s\n", "");
-    a->traverse_map(2,2);
-    a->traverse_map_vertical(2,2);
-    a->traverse_map_inverse(2,5);
-    a->traverse_map_inverse(3,3);
-    printf("%s\n","" );
-    
-    SensorToMap * controling_sensors = new SensorToMap(4, a);
+  thread_map.join();
+  thread_robots.join();
 
-    
-    
-    a->traverse_map_inverse();
-
-
-
-
-    while (1) {
-      std::this_thread::sleep_for(std::chrono::seconds(3));
-      controling_sensors->update_values();
-      a->traverse_map_inverse();
-    }
-    
-    
-   
-  }
-  else if (argc == 1 || !strcmp(argv[1],"sensor")) {
-    //Starting the SensorHandler
-    //char* mac = "30:14:12:12:13:29";
-    //Sensor * sensor = new Sensor(mac);
-    //sensor->~Sensor();
-    //sensor = new Sensor();
-    //sensor->~Sensor();
-    
-
-    
-  }
-  else {
-    printf("%s\n", "Please specifify a valid parameter");
-  }
-
+  
   
   return 0;
 
+}
+void map_thread_function(Map * ourMap){  
+  SensorToMap * controling_sensors = new SensorToMap(NUMBER_OF_SENSORS, ourMap);
+  while (1) {
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    controling_sensors->update_values();
+    ourMap->traverse_map_inverse();
+  }
+ 
+}
+void robot_thread_function(){
+    RoboGrab *robograb = new RoboGrab();
+    robograb->start(5000);
+    delete robograb;
+  
 }
