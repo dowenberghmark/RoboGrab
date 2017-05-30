@@ -10,7 +10,7 @@ LIBS=-lm
 _DEPS = robolib.h protocol.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = robolib.o controller.o
+_OBJ = robolib.o test.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
