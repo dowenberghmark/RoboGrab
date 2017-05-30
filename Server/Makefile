@@ -23,9 +23,9 @@ OBJECTS := $(shell find . ! -name "sensor.*" ! -name "job.*" ! -name "jobSchedul
 else
 MONGODB=-I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi
 MLIB = -L/usr/local/lib -lmongocxx -lbsoncxx
-LDFLAGS=-Wl,-rpath,/usr/local/lib       -lbluetooth -lm -lrt -lpthread   -lsioclient -lcurl
+LDFLAGS=-Wl,-rpath,/usr/local/lib       -lbluetooth -lm -lrt -lpthread    -lcurl
 LIBS += -L/usr/lib/x86_64-linux-gnu -lboost_system
-OBJECTS := $(shell find . ! -name "mac_sensor.*" -name "*.cpp" -maxdepth 1)
+OBJECTS := $(shell find . ! -name "mac_sensor.*" ! -name "jobScheduler.*" ! -name "job.*"  -name "*.cpp" -maxdepth 1)
 endif
 
 all: clean server
