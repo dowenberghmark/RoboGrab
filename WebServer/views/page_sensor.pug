@@ -1,0 +1,24 @@
+block header
+block content
+    doctype
+    html
+        head
+
+            body
+.col-sm-offset-2.col-sm-4
+        h1: label: label-default Sweden Warehouse
+
+        ol(ng-repeat="sensor in sensors"): .sweLocPanel: .whiteText
+            h2 {{sensor._id}}
+            p Temperature: {{sensor.temperature}}
+            p Humidity: {{sensor.humidity}}
+
+
+.col-sm-offset-2.col-sm-4
+    h1: label: label-default Vietnam Warehouse
+
+    ol(ng-repeat="sensor in sensors"): .vieLocPanel: .whiteText
+        h2 {{sensor._id}}
+        p Temperature: {{sensor.temperature}}
+        p Humidity: {{sensor.humidity}}
+

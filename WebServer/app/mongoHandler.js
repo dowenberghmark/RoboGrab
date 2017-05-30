@@ -3,26 +3,25 @@ module.exports = (app,mongo) => {
   function MongoConnection(config) {
 
   	// Validate input configuration
-  	function validateConfig() {
-  		if(typeof(config)!="object") {
-  			throw("config required for MongoConnection");
-  		}
-  		if(config.SocketIOPorts.length == 0 || typeof(config.SocketIOPorts[0])!="number") {
-  			throw("SocketIOPort required and must be a number");
-  		}
-  		if(config.Collections.length == 0 || typeof(config.Collections[0])!="string") {
-  			throw("At least 1 collection required");
-  		}
-  		if(typeof(config.Database)!="string") {
-  			throw("Database required");
-  		}
-  		if(typeof(config.MongoServer)!="string") {
-  			throw("MongoServer required");
-  		}
-  	}
+      function validateConfig() {
+          if(typeof(config)!="object") {
+              throw("config required for MongoConnection");
+          }
+          if(config.SocketIOPorts.length == 0 || typeof(config.SocketIOPorts[0])!="number") {
+              throw("SocketIOPort required and must be a number");
+          }
+          if(config.Collections.length == 0 || typeof(config.Collections[0])!="string") {
+              throw("At least 1 collection required");
+          }
+          if(typeof(config.Database)!="string") {
+              throw("Database required");
+          }
+          if(typeof(config.MongoServer)!="string") {
+              throw("MongoServer required");
+          }
+      }
 
-  	validateConfig();
-
+      validateConfig();
 
   	/*
   		Create a socket and listen on the mentioned port.
@@ -166,8 +165,8 @@ module.exports = (app,mongo) => {
 
   // Start a MongoConnection
   var m = new MongoConnection({
-  	SocketIOPorts: [socketPort,socketPort+1], // SocketIO port, one for each collection!
-  	Collections: ["sensors","map"], // we have the robograb collection
+  	SocketIOPorts: [socketPort,socketPort+1, socketPort+2,socketPort+3,socketPort+4], // SocketIO port, one for each collection!
+  	Collections: ["sensors","map","robots","locations","items"], // we have the robograb collection
   	Database: "warehouseSWE", // database name
   	MongoServer:"localhost" // server name
   });

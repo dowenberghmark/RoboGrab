@@ -83,3 +83,42 @@ body {
 .main .page-header {
   margin-top: 0;
 }
+
+.sensorbtn{
+  background-color: #428bca;
+  border: hidden;
+  border-radius: 0%;
+  color: white;
+  border-color: transparent;
+}
+.sensorbtn:hover{
+  background-color: #2b557e;
+  border: hidden;
+  border-radius: 1%;
+  color: white;
+  border-color: transparent;
+
+
+}
+
+button{
+  border: hidden;
+  margin: 0;
+  padding: 0%;
+}
+
+.sweLocPanel{
+  background-color: #2b557e;
+  border-radius: 4px;
+  padding: 2%;
+}
+
+.vieLocPanel{
+  background-color: #7e2722;
+  border-radius: 4px;
+  padding: 2%;
+}
+
+.whiteText{
+  color: white;
+}

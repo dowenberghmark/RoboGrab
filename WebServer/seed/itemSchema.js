@@ -12,8 +12,9 @@ mongoose.connect('localhost:27017/warehouseSWE');
 
 var items = [
   new Item({
- 
-    sunlight: false,
+    name: "testItem",
+    minHumidity: 0,
+    maxHumidity: 50,
     minTemperature: 0,
     maxTemperature: 23,
     locationID: null

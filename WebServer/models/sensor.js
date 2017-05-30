@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 
 var schema = new Schema({
     _id: String,
-    sunlight:{type: String, required:true},
-    temperature:{type: String, required:true}
+    humidity:{type: Number, required:true},
+    temperature:{type: Number, required:true}
 });
 
 module.exports = mongoose.model('sensors', schema);

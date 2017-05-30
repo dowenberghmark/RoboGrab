@@ -13,10 +13,25 @@
         controller: 'overviewController',
         controllerAs: 'ovwCtrl'
       })
-      .when('/test', {
-        templateUrl: '/views/test',
-        controller: 'testController',
-        controllerAs: 'testCtrl'
+      .when('/location', {
+        templateUrl: '/views/location',
+        controller: 'locationController',
+        controllerAs: 'locCtrl'
+      })
+      .when('/sensor', {
+            templateUrl: '/views/sensor',
+            controller: 'sensorController',
+            controllerAs: 'sensorCtrl'
+      })
+      .when('/inventory', {
+            templateUrl: '/views/inventory',
+            controller: 'inventoryController',
+            controllerAs: 'inventCtrl'
+      })
+      .when('/newItem', {
+            templateUrl: '/views/newItem',
+            controller: 'newItemController',
+            controllerAs: 'newCtrl'
       })
       .otherwise({
         redirectTo: '/'
