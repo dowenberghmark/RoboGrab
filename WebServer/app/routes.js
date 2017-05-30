@@ -8,6 +8,28 @@ module.exports = (app,url,MongoClient) => {
     '/events'
   ];
 
+  app.get('/map', (req,res) => {
+    var mongoHandler = require('./mongoHandler.js'); 
+    MongoClient.connect(url, function(err, db) {
+    if(err) {
+      console.log(err);
+   }
+
+    mongoHandler.findMap(db, function(err, map) {
+      if (err) 
+        console.log('Searching the database failed');
+      else {
+        if (!map)
+          console.log('Map not found');
+        else
+          res.json(map);
+      }
+      db.close();
+      return;
+    });
+  });
+  })
+
   /* Register page routing */
   pages.forEach((page) => {
     app.get(page, (req, res) => {

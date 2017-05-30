@@ -3,25 +3,27 @@
 
   var app = angular.module('webtool');
 
-  app.controller('overviewController', ['$scope','angularBase','$q', function($scope, angularBase,$q) {
+  app.controller('overviewController', ['$scope','angularBase','$http', function($scope, angularBase,$http) {
     var that = this;
+    $scope.map;
+    var img = document.getElementById('map_img');
     
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
+    context.drawImage(img, 0, 0);
 
-    
     //Set parameters
     this.tileSize = 50;
     context.fillStyle = "rgba(255,0,0,0.6)";
-    canvas.width = 600;
-    canvas.height = 400;
 
     this.base = angularBase("http://localhost:27019","map");
-    var map = that.base.getAll(); 
+    var map = that.base.getAll();
 
-    this.drawMap = function(nodes) {
-        for(var node in nodes){
-          that.drawTile(node.x, node.y)
+    this.drawMap = function(nodes) { 
+      canvas.width = 7*50;
+      canvas.height = 7*50;
+      var im = $scope.crossroad;
+        for(var i in nodes){
         }
     }
 
@@ -31,7 +33,6 @@
       this.tileSize, this.tileSize
     )};
 
-    that.drawMap(map[0].nodes);
     
  
   }]);
