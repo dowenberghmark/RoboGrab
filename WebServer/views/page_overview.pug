@@ -1,8 +1,31 @@
-.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+.col-sm-9.col-md-offset-2.main
   h1.page-header Dashboard
-  image(id='map_img' ng-src="/static/pictures/GSPD_Layout.png")
-  canvas(id='canvas' style='border: 1px gray solid; float: left')
-  
-  li(ng-repeat="node in map.nodes | orderBy: '_id'")
-        p X: {{node.x}}
-        p Y: {{node.y}}
+  .row
+    .col-sm-6
+      h2 Map
+      canvas(id='canvas' style='border: 1px gray solid; float: left')
+    .col-sm-6.other
+      h2 Sensors
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th Sensor ID
+            th Light-Value
+            th Temperature
+        tbody(ng-repeat='sensor in sensors')
+          tr
+            td {{sensor._id}}
+            td {{sensor.sunlight}}
+            td {{sensor.temperature}}
+      h2 Robots
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th Robot ID
+            th Status
+            th Position
+        tbody(ng-repeat='robot in robots')
+          tr
+            td {{robot._id}}
+            td {{robot.available}}
+            td {{robot.position}}
