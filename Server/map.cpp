@@ -309,8 +309,8 @@ Node * Map::get_node(int x,int y){
 }
 
 
-std::vector<std::string>  Map::path(Node * start, Node * end){
-  std::vector<std::string> path_list;
+std::string  Map::path(Node * start, Node * end){
+  std::string path_list;
   std::vector<std::string> reversed_path_list;
   std::vector<Node * > visited;
   std::vector<Node * > queue;
@@ -403,9 +403,13 @@ std::vector<std::string>  Map::path(Node * start, Node * end){
       reversed_path_list.push_back("right");
     tmp = tmp->parent;
   }
-
+  path_list = "DIR|";
    for (int p = reversed_path_list.size()-1; p >=0 ; p--) {
-     path_list.push_back(reversed_path_list.at(p));
+     if (p == 0) {
+       path_list+=reversed_path_list.at(p);
+     }else
+       path_list+=reversed_path_list.at(p)+"|";
+     
    }
    this->traverse_set_null_parent();
   return path_list;

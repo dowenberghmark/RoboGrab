@@ -74,7 +74,7 @@ public:
   void traverse_map();
   std::vector<Shelf *> shelves_list;
 
-  std::vector<std::string> path(Node * start, Node * end);
+ std::string path(Node * start, Node * end);
   
   // inverse function makes it look like the layout in design documents
   void traverse_map_inverse();

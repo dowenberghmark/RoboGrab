@@ -37,10 +37,10 @@ int main(int argc, char *argv[]) {
   
   
   mainMap->traverse_map_inverse();
-  std::vector<std::string> path_list = mainMap->path(mainMap->get_node(0,0), mainMap->get_node(5,4) );
-  for (auto a_node : path_list ){
-    std::cout << a_node << "\t";
-  }
+  std::string path_list = mainMap->path(mainMap->get_node(0,0), mainMap->get_node(5,4) );
+  
+  std::cout << path_list << "\n";
+  
   std::thread thread_map (map_thread_function, mainMap);
   std::thread thread_robots(robot_thread_function);
 
