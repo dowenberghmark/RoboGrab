@@ -43,6 +43,41 @@ public:
   
 };
 
+class Dropoff: public Node {
+ 
+public:
+
+  Dropoff(int x0, int y0, Node * l, Node * r, Node * f, Node * b);
+  
+  ~Dropoff();
+  void print_node_name();
+  bool up_connected();
+  bool down_connected();
+  bool left_connected();
+  bool right_connected();
+  std::string get_node_type();
+  
+};
+
+
+class Idlezone: public Node {
+ 
+public:
+
+  Idlezone(int x0, int y0, Node * l, Node * r, Node * f, Node * b);
+  
+  ~Idlezone();
+  void print_node_name();
+  bool up_connected();
+  bool down_connected();
+  bool left_connected();
+  bool right_connected();
+  std::string get_node_type();
+  
+};
+
+
+
 class Shelf: public Node
 {
  public:

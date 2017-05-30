@@ -62,7 +62,66 @@ std::string Crossroad::get_node_type() {
 }
 
 Crossroad::~Crossroad(){}
+//
 
+Dropoff::Dropoff(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0, l, r, f, b){}
+
+
+void Dropoff::print_node_name(){
+  std::cout << ( "Dropoff");
+
+}
+//may have fucked it up..
+bool Dropoff::up_connected(){
+  return true;
+}
+bool Dropoff::down_connected(){
+  return false;
+}
+bool Dropoff::left_connected(){
+  return false;
+}
+bool Dropoff::right_connected(){
+  return false;
+}
+
+
+std::string Dropoff::get_node_type() {
+  return "Dropoff";
+}
+
+Dropoff::~Dropoff(){}
+
+//
+Idlezone::Idlezone(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0, l, r, f, b){}
+
+
+void Idlezone::print_node_name(){
+  std::cout << ( "Idlezone");
+
+}
+//may have fucked it up..
+bool Idlezone::up_connected(){
+  return (true  );
+}
+bool Idlezone::down_connected(){
+  return (false );
+}
+bool Idlezone::left_connected(){
+  return false;
+}
+bool Idlezone::right_connected(){
+  return false;
+}
+
+
+std::string Idlezone::get_node_type() {
+  return "Idlezone";
+}
+
+Idlezone::~Idlezone(){}
+
+///
 Shelf::Shelf(int x0, int y0, Node * l, Node * r, Node * f, Node * b):Node(x0, y0, l, r, f, b){
   struct sensor_data tmp;
   tmp.temp = 0.0;
@@ -154,6 +213,37 @@ Map::Map(int x0, int y0){
 
 
   }
+
+  
+  Node * first,* second,* third;
+  Node * tmp = this->root;
+  
+  tmp->down = new Dropoff(0, -1,NULL,NULL, tmp,NULL );
+  first = tmp->down;
+  //first->print_coordinate();
+  for (int i = 0; i < 3; i++) {
+    tmp = tmp->right;
+    
+    
+  
+  }
+
+  tmp->down = new Idlezone(3, -1,first,NULL, tmp,NULL );
+  
+  second = tmp->down;
+  first->right = second;
+  
+  for (int i = 0; i < 3; i++) {
+    tmp = tmp->right;
+  
+  }
+  
+  
+  tmp->down = new Idlezone(6, -1,second,NULL, tmp,NULL );
+  third = tmp->down;
+  second->right = third;
+  
+  
   init_shelf_vector();
 }
 
@@ -294,7 +384,15 @@ void Map::traverse_map_inverse(int x, int y){
 
 Node * Map::get_node(int x,int y){
   Node * conductor = NULL;
-  if(x <= size_x && y <= size_y ){
+  if (y < 0) {
+    if(x == 0)
+      conductor = root->down;
+    else if (x == 3)
+      conductor = root->down->right;
+    else if (x == 6)
+      conductor = root->down->right->right;
+  }
+  else if(x <= size_x && y <= size_y ){
     conductor = root;
     for (int j = 0; j < y; j++) {
       conductor = conductor->up;
@@ -321,11 +419,10 @@ std::string  Map::path(Node * start, Node * end){
  
   Node * tmp;
   end->parent = NULL;
-
+  start->parent = NULL;
   while (!queue.empty()) {
+    
 
-
-        
     tmp = queue.at(0);
     queue.erase(queue.begin(),queue.begin()+1);
 
@@ -383,16 +480,16 @@ std::string  Map::path(Node * start, Node * end){
           visited.push_back(tmp->left);
           (tmp->left)->parent = tmp;
         }
+       
       }
       
       
     }
-    // ++i;
+
   }
   
-  
   while(tmp->parent !=NULL){
-    
+
     if( tmp->parent->up == tmp)
       reversed_path_list.push_back("up");
     else if( tmp->parent->down == tmp)
@@ -429,7 +526,6 @@ Map::~Map(){
     free(conductor);
     conductor = tmp;
     if (conductor == NULL && row_up !=NULL){
-
       conductor = row_up;
       row_up = conductor->up;
     }
