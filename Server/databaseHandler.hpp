@@ -47,7 +47,7 @@ using bsoncxx::builder::stream::open_document;
 //#include "map.hpp"
 
 #include <iostream>
-void update_sensor_to_db();
+void update_values_to_db(std::string updateObject);
 
 class DatabaseHandler{
   public:

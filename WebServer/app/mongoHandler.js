@@ -166,8 +166,8 @@ module.exports = (app,mongo) => {
 
   // Start a MongoConnection
   var m = new MongoConnection({
-  	SocketIOPorts: [socketPort,socketPort+1, socketPort+2,socketPort+3,socketPort+4], // SocketIO port, one for each collection!
-  	Collections: ["sensors","map","robots","locations","items"], // we have the robograb collection
+  	SocketIOPorts: [socketPort,socketPort+1, socketPort+2,socketPort+3,socketPort+4,socketPort+5], // SocketIO port, one for each collection!
+  	Collections: ["sensors","map","robots","locations","items","jobs"], // we have the robograb collection
   	Database: "warehouseSWE", // database name
   	MongoServer:"localhost" // server name
   });
