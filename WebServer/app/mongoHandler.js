@@ -166,8 +166,8 @@ module.exports = (app,mongo) => {
 
   // Start a MongoConnection
   var m = new MongoConnection({
-  	SocketIOPorts: [socketPort,socketPort+1, socketPort+2,socketPort+3,socketPort+4], // SocketIO port, one for each collection!
-  	Collections: ["sensors","map","robots","locations","items"], // we have the robograb collection
+  	SocketIOPorts: [socketPort,socketPort+1, socketPort+2,socketPort+3,socketPort+4,socketPort+5], // SocketIO port, one for each collection!
+  	Collections: ["sensors","map","robots","locations","items","jobs"], // we have the robograb collection
   	Database: "warehouseSWE", // database name
   	MongoServer:"localhost" // server name
   });
@@ -187,4 +187,16 @@ var findMap = function(db, callback) {
 	});
 }
 
+var findRobots = function(db, callback) {
+		// Get the map
+		var collection = db.collection('robots');
+		// Find the map document
+		collection.find().toArray( function(err, items) {
+		if (err) return callback(err, null);
+		console.log("Found robots");
+    	return callback(null, items);
+	});
+}
+
 module.exports.findMap = findMap;
+module.exports.findRobots = findRobots;

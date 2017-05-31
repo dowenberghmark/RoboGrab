@@ -50,11 +50,32 @@ module.exports = (app,url,MongoClient) => {
     res.send("");
   });
 
-
-    app.get('/update-robots', (req,res) => {
-        var io = require('socket.io-client');
+  app.get('/update-robots', (req,res) => {
+    var io = require('socket.io-client');
     var socket = io.connect('http://localhost:27020');
     socket.emit('updateValues');
     res.send("");
 });
+
+app.get('/update-robot_pos', (req,res) => {
+    var mongoHandler = require('./mongoHandler.js'); 
+    MongoClient.connect(url, function(err, db) {
+    if(err) {
+      console.log(err);
+   }
+
+    mongoHandler.findRobots(db, function(err, robots) {
+      if (err) 
+        console.log('Searching the database failed');
+      else {
+        if (!robots)
+          console.log('No robots found');
+        else
+          res.json(robots);
+      }
+      db.close();
+      return;
+    });
+  });
+  })
 };
