@@ -4,12 +4,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    name:{type: String},
+    name:{type: String, requried:true},
     minHumidity:{type: Number, required:false},
     maxHumidity:{type: Number, required:false},
     minTemperature:{type: Number, required:false},
     maxTemperature:{type: Number, required:false},
-    locationID:{type: String, required:false}
+    xPosition:{type: Number, required:true},
+    yPosition:{type: Number, required:true}
 });
 
 module.exports = mongoose.model('items', schema);

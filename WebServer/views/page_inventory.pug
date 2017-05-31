@@ -1,31 +1,28 @@
-block header
-block content
-    doctype
-    html
-        head
-
-            body
-.col-sm-offset-2.col-sm-4
-        h1: label: label-default Sweden Warehouse
-
-        ol(ng-repeat="item in items"): .sweLocPanel: .whiteText
-            h4 itemID: {{item._id}}
-            p item name: {{item.name}}
-            p minTemperature: {{item.minTemperature}}
-            p maxTemperature: {{item.maxTemperature}}
-            p minHumidity: {{item.minHumidity}}
-            p maxHumidity: {{item.maxHumidity}}
-            p locationID: {{item.locationID}}
-
-
-.col-sm-offset-0.col-sm-4
-    h1: label: label-default Vietnam Warehouse
-
-    ol(ng-repeat="item in items"): .vieLocPanel: .whiteText
-        h4 itemID: {{item._id}}
-        p item name: {{item.name}}
-        p minTemperature: {{item.minTemperature}}
-        p maxTemperature: {{item.maxTemperature}}
-        p minHumidity: {{item.minHumidity}}
-        p maxHumidity: {{item.maxHumidity}}
-        p locationID: {{item.locationID}}
+.col-sm-9.col-md-offset-2.main
+  h1.page-header Dashboard
+  .row
+    .col.main
+      h2 Items
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th Sensor ID
+            th Humidity
+            th Temperature
+            th Location
+        tbody(ng-repeat='item in items')
+          tr
+            td {{item.name}}
+            td {{item.minHumidity}}/{{item.maxHumidity}}
+            td {{item.minTemperature}}/{{maxTemperature}}
+            td X:{{item.xPosition}},Y:{{item.yPosition}}
+      h2 Locations
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th Shelf Position
+            th Available
+        tbody(ng-repeat='node in nodes | filter:{ type : "shelf"}')
+          tr
+            td X:{{node.x}},Y:{{node.y}}
+            td {{node.available}}

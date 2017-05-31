@@ -14,7 +14,8 @@ var sensors = [
     new Robot({
     _id : 'bluetoothID',
     available: true,
-    position: "node1"
+    xPosition: 0,
+    yPosition: -1
     }),
 
 ];

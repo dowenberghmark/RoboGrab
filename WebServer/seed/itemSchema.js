@@ -17,7 +17,8 @@ var items = [
     maxHumidity: 50,
     minTemperature: 0,
     maxTemperature: 23,
-    locationID: null
+    xPosition: 0,
+    yPosition: -1
     }),
 
 ];

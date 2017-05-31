@@ -75,7 +75,7 @@ class DatabaseHandler{
     /**
       send the robot positions to the GUI to display
     **/
-    void sendRobotPosition(const char* node, const char* robotID);
+    void sendRobotPosition(int yPosition, int xPosition, const char* robotID);
 
     /**
       update a sensor value

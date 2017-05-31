@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 
 var schema = new Schema({
     _id: String,
-    position:{type: String, required:true},
+    xPosition:{type: Number, required:true},
+    yPosition:{type: Number, required:true},
     available:{type: Boolean, required:true}
 });
 

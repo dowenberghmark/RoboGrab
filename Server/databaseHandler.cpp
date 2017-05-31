@@ -36,6 +36,7 @@ void DatabaseHandler::createJSONfromMap(Map * inMap) {
                 node.append(kvp("x",(*it)->getX()));
                 node.append(kvp("y",(*it)->getY()));
                 node.append(kvp("type",(*it)->get_node_type()));
+                node.append(kvp("available","true"));
                 node.append(kvp("neighbors",[&it](sub_array neighbors){
                     if((*it)->left)
                         neighbors.append("left");
@@ -91,7 +92,7 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
    
 }
 
-void DatabaseHandler::sendRobotPosition(const char* nodePosition, const char* robotID){
+void DatabaseHandler::sendRobotPosition(int xPosition, int yPosition, const char* robotID){
     //only once
      mongocxx::instance inst{};
     //connect to a server running on localhost on port 27017
@@ -104,8 +105,9 @@ void DatabaseHandler::sendRobotPosition(const char* nodePosition, const char* ro
 
     collection.update_one(
         document{} << "_id" << robotID << finalize,
-        document{} << "$set" << open_document <<
-        "position" << nodePosition << close_document << finalize);
+        document{} << "$set" << open_document
+        << "xPosition" << xPosition
+        << "yPosition" << yPosition << close_document << finalize);
 }
 
 void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){

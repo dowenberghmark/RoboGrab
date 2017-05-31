@@ -10,12 +10,12 @@
         thead
           tr
             th Sensor ID
-            th Light-Value
+            th Humidity
             th Temperature
         tbody(ng-repeat='sensor in sensors')
           tr
             td {{sensor._id}}
-            td {{sensor.sunlight}}
+            td {{sensor.humidity}}
             td {{sensor.temperature}}
       h2 Robots
       table.table.table-hover.table-striped

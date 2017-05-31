@@ -34,6 +34,8 @@ int main(int argc, char *argv[]) {
 
   DatabaseHandler *databaseHandler_ = new DatabaseHandler();
   databaseHandler_->updateSensorValue("sensor1",23,8934);
+
+  databaseHandler_->createJSONfromMap(mainMap);
   
   
   mainMap->traverse_map_inverse();

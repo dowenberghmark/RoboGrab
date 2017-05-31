@@ -54,7 +54,7 @@
 
       $scope.sensors = Sensors.getAll();
 
-      var Robots = angularBase("http://localhost:27019","robots");
+      var Robots = angularBase("http://localhost:27020","robots");
 
       $scope.robots = Robots.getAll();
 

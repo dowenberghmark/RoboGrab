@@ -30,7 +30,7 @@
  	const char* robotID = "bluetoothID";
 
  	DatabaseHandler *databaseHandler_ = new DatabaseHandler();
-    databaseHandler_->sendRobotPosition(nodePosition,robotID);
+    databaseHandler_->sendRobotPosition(4, 3,robotID);
  }
 
   else if(argc == 1 || !strcmp(argv[1],"updateRobotStatus")){
