@@ -86,7 +86,7 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
         "temperature" << temp << close_document << finalize);
 
 
-    update_sensor_to_db();
+    update_value_to_db("sensors");
  
     std::cout << "Event emited" << std::endl;
    
@@ -108,6 +108,8 @@ void DatabaseHandler::sendRobotPosition(int xPosition, int yPosition, const char
         document{} << "$set" << open_document
         << "xPosition" << xPosition
         << "yPosition" << yPosition << close_document << finalize);
+
+    update_value_to_db("robot_pos")
 }
 
 void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){
@@ -126,13 +128,16 @@ void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){
         document{} << "$set" << open_document <<
         "available" << isAvailable << close_document << finalize);
 }
-void update_sensor_to_db(){
+void update_value_to_db(std::string updateObject){
     CURL *curl;
     CURLcode res;  
  
     curl = curl_easy_init();
     if(curl) {
-      curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-sensors");
+    switch(updateObject){
+        case "sensors": curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-sensors"); break;
+        case "robot_pos": curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-robot_pos"); break; 
+    }
       /* example.com is redirected, so we tell libcurl to follow redirection */ 
       curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
  
