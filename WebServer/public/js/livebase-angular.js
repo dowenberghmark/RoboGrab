@@ -21,16 +21,13 @@ angular.module('livebase').factory('angularBase', function($rootScope,$q) {
 		return {
 			put: function(data) {
 				lb.save(data);
-				updateUI(); // TODO: return promise?
 			},
 			getAll: function() {
 				return lb.getAllData();
-				// TODO: return promise?
 			},
 			remove: function(data) {
 				lb.remove(data);
 				console.log('remove called');
-				// TODO: return promise?
 			}
 		};
 	};
