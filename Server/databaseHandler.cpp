@@ -1,7 +1,7 @@
 #include "databaseHandler.hpp"
 
 //#include <vector>
-
+using namespace std;
 DatabaseHandler::DatabaseHandler() {
 
 
@@ -86,7 +86,7 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
         "temperature" << temp << close_document << finalize);
 
 
-    update_value_to_db("sensors");
+    update_values_to_db(1);
  
     std::cout << "Event emited" << std::endl;
    
@@ -109,7 +109,7 @@ void DatabaseHandler::sendRobotPosition(int xPosition, int yPosition, const char
         << "xPosition" << xPosition
         << "yPosition" << yPosition << close_document << finalize);
 
-    update_value_to_db("robot_pos")
+    update_values_to_db(2);
 }
 
 void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){
@@ -128,15 +128,16 @@ void DatabaseHandler::updateRobotStatus(bool isAvailable, const char* robotID){
         document{} << "$set" << open_document <<
         "available" << isAvailable << close_document << finalize);
 }
-void update_value_to_db(std::string updateObject){
+void update_values_to_db(int updateObject){
     CURL *curl;
     CURLcode res;  
- 
+    
+    
     curl = curl_easy_init();
     if(curl) {
     switch(updateObject){
-        case "sensors": curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-sensors"); break;
-        case "robot_pos": curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-robot_pos"); break; 
+        case 1: curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-sensors"); break;
+        case 2: curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:3000/update-robot_pos"); break; 
     }
       /* example.com is redirected, so we tell libcurl to follow redirection */ 
       curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
