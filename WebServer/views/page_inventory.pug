@@ -1,0 +1,31 @@
+block header
+block content
+    doctype
+    html
+        head
+
+            body
+.col-sm-offset-2.col-sm-4
+        h1: label: label-default Sweden Warehouse
+
+        ol(ng-repeat="item in items"): .sweLocPanel: .whiteText
+            h4 itemID: {{item._id}}
+            p item name: {{item.name}}
+            p minTemperature: {{item.minTemperature}}
+            p maxTemperature: {{item.maxTemperature}}
+            p minHumidity: {{item.minHumidity}}
+            p maxHumidity: {{item.maxHumidity}}
+            p locationID: {{item.locationID}}
+
+
+.col-sm-offset-0.col-sm-4
+    h1: label: label-default Vietnam Warehouse
+
+    ol(ng-repeat="item in items"): .vieLocPanel: .whiteText
+        h4 itemID: {{item._id}}
+        p item name: {{item.name}}
+        p minTemperature: {{item.minTemperature}}
+        p maxTemperature: {{item.maxTemperature}}
+        p minHumidity: {{item.minHumidity}}
+        p maxHumidity: {{item.maxHumidity}}
+        p locationID: {{item.locationID}}

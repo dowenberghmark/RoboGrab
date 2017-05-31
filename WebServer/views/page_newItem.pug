@@ -1,0 +1,30 @@
+
+block content
+    .main.container
+        .row
+            .col-md-6.col-md-offset-3
+                h1.display-4.m-b-2 Add item to warehouse
+
+                // register form
+                form(ng-submit="addItem()")
+                    div.form-group
+                        label(for='name') Item name:
+                        input#name.form-control(type='text',ng-model="nameInput", placeholder='name of item' name='name')
+                    div.form-group
+                        label(for='minTemperature') minimum temperature:
+                        input#minTemperature.form-control(type='number',ng-model="minTempInput", placeholder='the lowest temperature allowed in celsius' name='minTemperature')
+                    div.form-group
+                        label(for='maxTemperature') maximum temperature:
+                        input#maxTemperature.form-control(type='number',ng-model="maxTempInput", placeholder='the highest temperature allowed in celsius' name='maxTemperature')
+                    div.form-group
+                        label(for='minHumidity') minimum humidity:
+                        input#minHumidity.form-control(type='number',ng-model="minHumInput",placeholder='the lowest level of humidity allowed' name='minHumidity')
+                    div.form-group
+                        label(for='maxHumidity') maximum humidity:
+                        input#maxHumidity.form-control(type='number',ng-model="maxHumInput", placeholder='the highest level of humidity allowed' name='maxHumidity')
+                    div.form-group
+                        label(for="warehouse") choose warehouse:
+                        select#warehouse.form-control
+                            option(value="sweWarehouse") Sweden Warehouse
+                            option(value="vieWarehouse") Vietnam Warehouse
+                    button.btn.btn-primary() Send item into warehouse

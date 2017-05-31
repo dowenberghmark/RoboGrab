@@ -4,10 +4,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-     
-    sunlight:{type: Boolean, required:true},
-    minTemperature:{type: Number, required:true},
-    maxTemperature:{type: Number, required:true},
+    name:{type: String},
+    minHumidity:{type: Number, required:false},
+    maxHumidity:{type: Number, required:false},
+    minTemperature:{type: Number, required:false},
+    maxTemperature:{type: Number, required:false},
     locationID:{type: String, required:false}
 });
 

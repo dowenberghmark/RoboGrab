@@ -41,6 +41,7 @@ function LiveBase(service_url, collection) {
 
 	insert = function(data) {
 		socket.emit('insert', data);
+		console.log('data inserted');
 	}
 
 	update = function(data) {

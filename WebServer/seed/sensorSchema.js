@@ -13,25 +13,25 @@ mongoose.connect('localhost:27017/warehouseSWE');
 var sensors = [
     new Sensor({
     _id : 'sensor1',
-    sunlight: 1,
+    humidity: 1,
     temperature: 14
     }),
 
     new Sensor({
         _id : 'sensor2',
-        sunlight: 1,
+        humidity: 1,
         temperature: 14
     }),
 
     new Sensor({
         _id : 'sensor3',
-        sunlight: 1,
+        humidity: 1,
         temperature: 14
     }),
 
     new Sensor({
         _id : 'sensor4',
-        sunlight: 1,
+        humidity: 1,
         temperature: 15
     })
 ];

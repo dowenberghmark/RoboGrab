@@ -30,13 +30,20 @@ block content
           ul.nav.nav-sidebar(ng-controller='navigationController')
             li(ng-class="{active:isActive('/')}")
               a(class='nav-link' ng-href='/') Overview
-            li(ng-class="{active:isActive('/test')}")
-              a(class='nav-link' ng-href='/test') Test
+            li(ng-class="{active:isActive('/location')}")
+              a(class='nav-link' ng-href='/location') Storage locations
+            li(ng-class="{active:isActive('/sensor')}")
+              a(class='nav-link' ng-href='/sensor') Warehouse sensors
             li(ng-class="{active:isActive('/inventory')}")
               a(class='nav-link' ng-href='/inventory') Warehouse Inventory
+
             li(ng-class="{active:isActive('/event')}")
               a(class='nav-link' ng-href='/event') Event Log
 
-      // Content
-      div(class='container')
-        div(class='view-animate' ng-view)
+
+            li(ng-class="{active:isActive('/newItem')}")
+              a(class='nav-link' ng-href='/newItem') Add new item
+    // Content
+    div(class='container')
+      div(class='view-animate' ng-view)
+
