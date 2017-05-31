@@ -50,4 +50,11 @@ module.exports = (app,url,MongoClient) => {
     res.send("");
   });
 
+
+    app.get('/update-robots', (req,res) => {
+        var io = require('socket.io-client');
+    var socket = io.connect('http://localhost:27020');
+    socket.emit('updateValues');
+    res.send("");
+});
 };

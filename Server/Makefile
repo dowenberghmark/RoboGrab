@@ -8,7 +8,7 @@ CC=g++
 PORT=1500
 SERVERIP=
 
-ifeq ($(UNAME_N),Andys-MBP.lan)
+ifeq ($(UNAME_N), student245-63.eduroam.uu.se)
 MONGODB= -I/usr/local/include/bsoncxx/v_noabi -I/usr/local/include/mongocxx/v_noabi
 MLIB = -L/usr/local/lib -lmongocxx -lbsoncxx
 LDFLAGS=-Wl,-rpath,/usr/local/lib  -lcurl
