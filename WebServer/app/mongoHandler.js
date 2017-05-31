@@ -187,4 +187,16 @@ var findMap = function(db, callback) {
 	});
 }
 
+var findRobots = function(db, callback) {
+		// Get the map
+		var collection = db.collection('robots');
+		// Find the map document
+		collection.find().toArray( function(err, items) {
+		if (err) return callback(err, null);
+		console.log("Found robots");
+    	return callback(null, items);
+	});
+}
+
 module.exports.findMap = findMap;
+module.exports.findRobots = findRobots;
