@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
 
   DatabaseHandler *databaseHandler_ = new DatabaseHandler();
   databaseHandler_->updateSensorValue("sensor1",23,8934);
+  databaseHandler_->sendRobotPosition(4,3,"bluetoothID");
 
   databaseHandler_->createJSONfromMap(mainMap);
   
