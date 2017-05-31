@@ -233,13 +233,13 @@ Map::Map(int x0, int y0){
   second = tmp->down;
   first->right = second;
   
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 2; i++) {
     tmp = tmp->right;
   
   }
   
   
-  tmp->down = new Idlezone(6, -1,second,NULL, tmp,NULL );
+  tmp->down = new Idlezone(5, -1,second,NULL, tmp,NULL );
   third = tmp->down;
   second->right = third;
   
