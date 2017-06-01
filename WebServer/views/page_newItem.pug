@@ -6,10 +6,10 @@ block content
                 h1.display-4.m-b-2 Add item to warehouse
 
                 // register form
-                form(ng-submit="addItem()")
+                form(ng-submit="addItem(); addItemToJob()")
                     div.form-group
                         label(for='name') Item name:
-                        input#name.form-control(type='text',ng-model="nameInput", placeholder='name of item' name='name')
+                        input#name.form-control(type='text',ng-model="nameI",ng-change="nameInput=nameI;nameJobInput=nameI;", placeholder='name of item' name='name')
                     div.form-group
                         label(for='minTemperature') minimum temperature:
                         input#minTemperature.form-control(type='number',ng-model="minTempInput", placeholder='the lowest temperature allowed in celsius' name='minTemperature')
@@ -24,7 +24,5 @@ block content
                         input#maxHumidity.form-control(type='number',ng-model="maxHumInput", placeholder='the highest level of humidity allowed' name='maxHumidity')
                     div.form-group
                         label(for="warehouse") choose warehouse:
-                        select#warehouse.form-control
-                            option(value="sweWarehouse") The Warehouse
-                      
+                        select(ng-option="location.xPosition for location in locations")
                     button.btn.btn-primary() Send item into warehouse
