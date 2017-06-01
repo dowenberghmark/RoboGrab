@@ -20,9 +20,11 @@
       table.table.table-hover.table-striped
         thead
           tr
+            th Shelf Name
             th Shelf Position
             th Available
         tbody(ng-repeat='location in locations')
           tr
-            td {{location.nodeID}}
+            td {{location.name}}
+            td X:{{location.X}},Y:{{location.Y}}
             td {{location.available}}

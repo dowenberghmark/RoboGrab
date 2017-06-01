@@ -22,6 +22,8 @@
           context.drawImage(img, 0, 0, 381, 537);
           for (var i in robotList){
             context.fillStyle="#FF5733";
+            //Pixel values of the vertical lines:
+            var xGrid = [];
             context.fillRect(robotList[i].xPosition,robotList[i].yPosition,20,20);
           }
       }
@@ -32,9 +34,6 @@
         console.log(errRes);
       }) 
     });
-
-    this.base = angularBase("http://localhost:27019","map");
-    var map = that.base.getAll();
 
     var Sensors = angularBase("http://localhost:27018","sensors");
 
