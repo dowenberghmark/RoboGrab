@@ -84,6 +84,14 @@ body {
   margin-top: 0;
 }
 
+.ava {
+  background-color: #00FF00;
+}
+
+.inactive {
+  background-color: #FE2E2E;
+}
+
 .sensorbtn{
   background-color: #428bca;
   border: hidden;

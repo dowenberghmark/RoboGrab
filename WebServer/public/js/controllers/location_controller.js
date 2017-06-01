@@ -6,9 +6,7 @@
   app.controller('locationController', ['$rootScope','$scope','angularBase', function($rootScope, $scope, angularBase) {
       var Sensors = angularBase("http://localhost:27018","sensors");
 
-
       $scope.sensors = Sensors.getAll();
-
 
     	$scope.changeSensorValues = function(index) {
     		var sensor = $scope.sensors[index];
