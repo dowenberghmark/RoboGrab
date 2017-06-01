@@ -60,8 +60,9 @@ var item = {name: $scope.nameInput,
  var Jobs = angularBase("http://localhost:27023", "jobs");
         var job = {
             name: $scope.nameJobInput,
-            jobType: "PICK-UP",
-            x: $scope.loc
+            jobType: "PUT_IN",
+            X: 5,
+            Y: 8
         
         };
 

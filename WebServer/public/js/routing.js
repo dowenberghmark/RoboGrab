@@ -28,11 +28,17 @@
             controller: 'inventoryController',
             controllerAs: 'inventCtrl'
       })
+      .when('/newJob', {
+            templateUrl: '/views/newJob',
+            controller: 'newJobController',
+            controllerAs: 'newJCtrl'
+      })         
       .when('/newItem', {
             templateUrl: '/views/newItem',
             controller: 'newItemController',
             controllerAs: 'newCtrl'
       })
+   
       .otherwise({
         redirectTo: '/'
       });

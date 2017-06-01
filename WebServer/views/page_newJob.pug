@@ -1,0 +1,16 @@
+.col-sm-9.col-md-offset-2.main
+  h1.page-header Jobs scheduled
+  .row
+    .col-sm-6
+
+      table.table.table-hover.table-striped
+        thead
+          tr
+            th Item
+            th Job type
+            th Position
+        tbody(ng-repeat='job in jobs')
+          tr
+            td {{job.name}}
+            td {{job.jobType}}
+            td X:{{job.X}}/Y:{{job.Y}}
