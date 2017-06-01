@@ -6,7 +6,7 @@ block content
 
             body
 .col-sm-offset-2.col-sm-4
-        h1: label: label-default Sweden Warehouse
+        h1: label: label-default Warehouse: Locations
 
         ol(ng-repeat="location in locations"): .sweLocPanel: .whiteText
             h2 {{location._id}}
@@ -14,14 +14,4 @@ block content
             p Location available: {{location.available}}
             p itemID: {{location.itemID}}
             p Position: {{location.nodeID}}
-
-.col-sm-offset-2.col-sm-4
-    h1: label: label-default Vietnam Warehouse
-
-    ol(ng-repeat="location in locations"): .vieLocPanel: .whiteText
-        h2 {{location._id}}
-        p Connected sensor: sensor{{location.sensorID}}
-        p Location available: {{location.available}}
-        p itemID: {{location.itemID}}
-        p Position: {{location.nodeID}}
 

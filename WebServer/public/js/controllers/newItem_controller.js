@@ -39,7 +39,10 @@ var item = {name: $scope.nameInput,
             minHumidity: $scope.minHumInput,
             maxHumidity: $scope.maxHumInput,
             minTemperature: $scope.minTempInput,
-            maxTemperature: $scope.maxTempInput};
+            maxTemperature: $scope.maxTempInput,
+            xPosition: 0,
+            yPosition: -1
+            }
 
             Items.put(item);
          

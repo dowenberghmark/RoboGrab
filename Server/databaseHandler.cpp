@@ -79,12 +79,11 @@ void DatabaseHandler::updateSensorValue(const char* sensorID, int temp, int sun)
     collection.update_one(
         document{} << "_id" << sensorID << finalize,
         document{} << "$set" << open_document <<
-        "sunlight" << sun << close_document << finalize);
+        "humidity" << sun << close_document << finalize);
 
     collection.update_one(document{} << "_id" << sensorID << finalize,
         document{} << "$set" << open_document <<
         "temperature" << temp << close_document << finalize);
-
 
     update_values_to_db(1);
  
