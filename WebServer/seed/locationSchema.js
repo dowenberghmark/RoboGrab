@@ -23,7 +23,7 @@ var locations = [
     _id: "loc2",
     sensorID: 1,
     itemID: null,
-    available: true,
+    available: false,
     nodeID: "node7"
     }),
 
@@ -31,7 +31,7 @@ var locations = [
     _id: "loc3",
     sensorID: 2,
     itemID: null,
-    available: true,
+    available: false,
     nodeID: "node13"
     }),
 
