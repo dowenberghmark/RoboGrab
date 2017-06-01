@@ -9,8 +9,10 @@
             th Item
             th Job type
             th Position
+            th Time
         tbody(ng-repeat='job in jobs')
           tr
             td {{job.name}}
             td {{job.jobType}}
             td X:{{job.X}}/Y:{{job.Y}}
+            td {{job.id.getTimestamp()}}
