@@ -27,6 +27,6 @@
         tbody(ng-repeat='location in locations')
           tr
             td {{location.name}}
-            td {{location.available}}
+            td(ng-class='{ava:(location.available==true),inactive:(location.available==false)}') {{location.available}}
             td {{location.sensorID}}
             td X:{{location.x}},Y:{{location.y}}
