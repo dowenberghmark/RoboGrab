@@ -5,15 +5,17 @@ var Schema = mongoose.Schema;
 var ObjectID = mongoose.Schema.Types.ObjectId;
 
 var schema = new Schema({
-	itemID:{type: ObjectID, requried:false},
+	name:{type: ObjectID, requried:false},
     Y:{type: Number, requried:false},
     X:{type: Number, required:false},
-    year:{type: Number, required:false},
+/*  using .getTimestamp();
+   year:{type: Number, required:false},
     month:{type: Number, required:false},
     day:{type: Number, required:false},
     hour:{type: Number, required:false},
     min:{type: Number, required:false},
     sec:{type: Number, required:false},
+*/
     jobType:{type: String, required:false}
 
 });
