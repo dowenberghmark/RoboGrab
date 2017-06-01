@@ -22,7 +22,7 @@
           tr
             th Shelf Position
             th Available
-        tbody(ng-repeat='node in nodes | filter:{ type : "shelf"}')
+        tbody(ng-repeat='location in locations')
           tr
-            td X:{{node.x}},Y:{{node.y}}
-            td {{node.available}}
+            td {{location.nodeID}}
+            td {{location.available}}

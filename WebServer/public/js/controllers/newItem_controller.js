@@ -5,10 +5,19 @@ var app = angular.module('webtool');
 
 
     app.controller('newItemController', ['$rootScope','$scope','angularBase', function($rootScope, $scope, angularBase) {
+        var Locations = angularBase("http://localhost:27021", "locations");
         var Items = angularBase("http://localhost:27022", "items"); // NOTE: The configuration here must match with the server - obviously
-
-        $scope.items = Items.getAll();
-
+        
+     //   
+      $scope.locations = Locations.getAll();
+     $scope.items = Items.getAll();
+    console.log("ITEMS")
+     console.log($scope.items)
+     console.log("LOCATIONS")
+     console.log($scope.locations)
+     console.log("SCOPE")
+     console.log($scope)
+        
         $scope.addItem = function () {
             var item = {name: $scope.nameInput,
 
@@ -16,6 +25,8 @@ var app = angular.module('webtool');
             maxHumidity: $scope.maxHumInput,
             minTemperature: $scope.minTempInput,
             maxTemperature: $scope.maxTempInput};
+
+            
             Items.put(item);
 
             $scope.nameInput = "";
@@ -23,17 +34,13 @@ var app = angular.module('webtool');
             $scope.maxHumInput = "";
             $scope.minTempInput = "";
             $scope.maxTempInput = "";
+
         }
 
-        $scope.deleteItem = function (index) {
-            var item = $scope.items[index];
-            Items.remove(item);
-        }
+// var Locations = angularBase("http://localhost:27021", "locations");
 
-        $scope.changeItem = function (index) {
-            var item = $scope.items[index];
-            item = {_id: item._id};
-            Items.put(item);
-        }
+
     }]);
+
+
 })(app);
