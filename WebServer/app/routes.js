@@ -72,6 +72,7 @@ app.get('/update-robot_pos', (req,res) => {
           console.log('No robots found');
         else
           res.json(robots);
+          console.log('Robots found');
       }
       db.close();
       return;

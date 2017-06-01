@@ -14,15 +14,19 @@
           tr
             td {{item.name}}
             td {{item.minHumidity}}/{{item.maxHumidity}}
-            td {{item.minTemperature}}/{{maxTemperature}}
+            td {{item.minTemperature}}/{{item.maxTemperature}}
             td X:{{item.xPosition}},Y:{{item.yPosition}}
       h2 Locations
       table.table.table-hover.table-striped
         thead
           tr
-            th Shelf Position
+            th Shelf Name
             th Available
+            th Sensor
+            th Position
         tbody(ng-repeat='location in locations')
           tr
-            td {{location.nodeID}}
+            td {{location.name}}
             td {{location.available}}
+            td {{location.sensorID}}
+            td X:{{location.x}},Y:{{location.y}}
