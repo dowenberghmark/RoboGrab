@@ -9,6 +9,7 @@
 #include <wait.h>
 #include <unistd.h>
 #include "protocol.h"
+#include "robolib.h"
 
 #define MAXLINE 4096 /*max text line length*/
 
@@ -44,6 +45,12 @@ int main(int argc, char **argv)
     perror("Problem in connecting to the server\n");
     exit(3);
   }
+
+  init_robot();
+  
+  move_right();
+ 
+  move_left();
   
   strcpy(server_ip, inet_ntoa(servaddr.sin_addr));
   while (recv(sockfd, recvline, MAXLINE,0) > 0){
@@ -53,10 +60,17 @@ int main(int argc, char **argv)
     int size;
     char **dirs = getDirs(msg.content, &size);
     for (int i = 0; i < size; i++) {
-      printf("%s ", dirs[i]);
+      if (strcmp(dirs[i], UP) == 0)
+	move_forward();
+      else if (strcmp(dirs[i], DOWN) == 0)
+	move_backward();
+      else if (strcmp(dirs[i], LEFT) == 0)
+	move_left();
+      else if (strcmp(dirs[i], RIGHT) == 0)
+	move_right();	 
     }
-    printf("\n");
   }
   printf("Process terminated\n");
+  uninit_robot();
   exit(0);
 }
